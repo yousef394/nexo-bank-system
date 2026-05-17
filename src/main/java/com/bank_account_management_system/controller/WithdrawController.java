@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 public class WithdrawController {
     public Label errorLabel;
+    public TextField passwordField;
     @FXML private TextField idField;
     @FXML private TextField amountField;
 
@@ -28,8 +29,9 @@ public class WithdrawController {
     public void handleWithdraw(ActionEvent event) {
         try {
             int id = Integer.parseInt(idField.getText());
+            String password = passwordField.getText();
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount acc = AccountService.findByIdAndPassword(id);
+            BankAccount acc = AccountService.findByIdAndPassword(id, password);
             if (acc == null){
                 System.out.println("id not found");
                 errorLabel.setText("id not found");
@@ -48,7 +50,7 @@ public class WithdrawController {
                 return;
             }
             // Calls your Checking-specific logic
-            if (AccountService.withdraw(id, amount)) {
+            if (AccountService.withdraw(id, password,amount)) {
                 DashboardController.instance.loadAccountData();
                 handleCancel(event);
             }

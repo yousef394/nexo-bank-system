@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 public class TransferController {
 
+    public TextField passwordField;
     @FXML private TextField fromAccountId;
     @FXML private TextField toAccountId;
     @FXML private TextField amountField;
@@ -29,9 +30,10 @@ public class TransferController {
     public void handleTransfer(ActionEvent event) {
         try {
             int fromId = Integer.parseInt(fromAccountId.getText());
+            String password = passwordField.getText();
             int toId = Integer.parseInt(toAccountId.getText());
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount fromAcc = AccountService.findByIdAndPassword(toId);
+            BankAccount fromAcc = AccountService.findByIdAndPassword(fromId, password);
             if (fromAcc == null){
                 System.out.println("toId not found");
                 errorLabel.setText("toId not found");
@@ -44,10 +46,10 @@ public class TransferController {
 
             }
 
-            BankAccount toAcc = AccountService.findById(fromId);
+            BankAccount toAcc = AccountService.findById(toId);
             if (toAcc == null){
-                System.out.println("fromId not found");
-                errorLabel.setText("fromId not found");
+                System.out.println("toId not found");
+                errorLabel.setText("toId not found");
                 return;
             }
             if (toAcc == fromAcc){
@@ -62,7 +64,7 @@ public class TransferController {
                 return;
             }
             // Call the transfer method in AccountService
-            boolean success = AccountService.transfer(fromId, toId, amount);
+            boolean success = AccountService.transfer(fromId, password,toId, amount);
 
             if (success) {
                 System.out.println("Transfer Successful!");

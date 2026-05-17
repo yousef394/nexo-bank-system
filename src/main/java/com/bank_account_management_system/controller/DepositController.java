@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 public class DepositController {
     public Label errorLabel;
+    public TextField passwordField;
     @FXML private TextField idField;
     @FXML private TextField amountField;
 
@@ -27,8 +28,9 @@ public class DepositController {
     public void handleDeposit(ActionEvent event) {
         try {
             int id = Integer.parseInt(idField.getText());
+            String password = passwordField.getText();
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount acc = AccountService.findByIdAndPassword(id);
+            BankAccount acc = AccountService.findByIdAndPassword(id, password);
             if (acc == null){
                 System.out.println("id not found");
                 errorLabel.setText("id not found");
@@ -39,7 +41,7 @@ public class DepositController {
                 errorLabel.setText("can't deposit less than .01");
                 return;
             }
-            boolean success = AccountService.deposit(id, amount);
+            boolean success = AccountService.deposit(id,password, amount);
             if (success) {
                 DashboardController.instance.loadAccountData(); // Refresh the table
                 handleCancel(event);
