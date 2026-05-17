@@ -19,6 +19,9 @@
     <!-- FROM ACCOUNT -->
     <TextField fx:id="idField" promptText="Account ID" />
 
+    <!-- PASSWORD -->
+    <TextField fx:id="passwordField" promptText="Password" />
+
     <!-- AMOUNT -->
     <TextField fx:id="amountField" promptText="Enter Amount" style="-fx-background-radius:8;" />
 

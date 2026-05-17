@@ -28,7 +28,7 @@ public class DepositController {
         try {
             int id = Integer.parseInt(idField.getText());
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount acc = AccountService.find(id);
+            BankAccount acc = AccountService.findByIdAndPassword(id);
             if (acc == null){
                 System.out.println("id not found");
                 errorLabel.setText("id not found");

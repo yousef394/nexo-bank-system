@@ -41,7 +41,7 @@ public class AccountService {
         return checkingRepo.delete(id) || savingsRepo.delete(id) || carLoanRepo.delete(id) || homeLoanRepo.delete(id);
     }
 
-    public static BankAccount find(int id) {
+    public static BankAccount findById(int id) {
 
        BankAccount account;
 
@@ -59,6 +59,17 @@ public class AccountService {
 
        else return null;
 
+    }
+
+    public static BankAccount findByIdAndPassword(int id , String password) {
+        BankAccount account =  findById(id);
+
+        if (account != null) {
+            if (password.equals(account.getPassword())) {
+                return account;
+            }
+        }
+        return null;
     }
 
     public static boolean saveAccount(BankAccount account) {
@@ -93,7 +104,12 @@ public class AccountService {
         return accounts;
     }
 
-    public static void applyMonthlyUpdates() {
+    public static void applyMonthlyUpdates(String userName) {
+
+        if(userName == null || userName.isEmpty()) {
+            return;
+        }
+
         ArrayList<BankAccount> accounts = loadAccounts();
         double amount = 0;
         TransactionType type ;
@@ -121,7 +137,8 @@ public class AccountService {
 
                if (saveAccount(account)) {
                    transactionRepo.add(new Transaction(account.getAccountId(), type
-                           , Math.abs(amount), balance, balance + amount));
+                           , Math.abs(amount), balance, balance + amount
+                           ,userName));
                }
            }
         }
@@ -129,10 +146,11 @@ public class AccountService {
 
     }
 
-    static public boolean deposit(int id, Double amount) {
-        BankAccount account = find(id);
+    public static boolean deposit(int id,String password, Double amount) {
+        String userName = UserService.getUser().getUsername();
+        BankAccount account = findByIdAndPassword(id,password);
 
-        if (account == null || amount == null || amount <= 0)
+        if (account == null || amount == null || amount <= 0 || userName == null || userName.isEmpty())
             return false;
 
         double balance = account.getBalance();
@@ -140,14 +158,15 @@ public class AccountService {
 
         return  account.deposit(amount) && saveAccount(account)
                 && transactionRepo.add(new Transaction( account.getAccountId(), TransactionType.DEPOSIT
-                ,amount, balance, balance + amount) );
+                ,amount, balance, balance + amount  ,userName) );
 
     }
 
-    static public boolean withdraw(int id, Double amount) {
-       BankAccount account = find(id);
+    public static boolean withdraw(int id,String password, Double amount) {
+        String userName = UserService.getUser().getUsername();
+        BankAccount account = findByIdAndPassword(id,password);
 
-        if (account == null || amount == null || amount <= 0)
+        if (account == null || amount == null || amount <= 0 ||userName == null || userName.isEmpty() )
             return false;
 
 
@@ -155,14 +174,15 @@ public class AccountService {
 
         return  account.withdraw(amount) && saveAccount(account)
                 && transactionRepo.add(new Transaction( account.getAccountId(),TransactionType.WITHDRAW,
-                amount,balance,balance-amount));
+                amount,balance,balance-amount ,userName) );
     }
 
-    static public boolean transfer(int idFrom , int idTo, double amount ) {
-            BankAccount account1 = find(idFrom);
-            BankAccount account2 = find(idTo);
+    public static boolean transfer(int idFrom,String password , int idTo, double amount) {
+            String userName = UserService.getUser().getUsername();
+            BankAccount account1 = findByIdAndPassword(idFrom,password);
+            BankAccount account2 = findById(idTo);
 
-            if (account1 == null || account2 == null || amount <= 0 )
+            if (account1 == null || account2 == null || amount <= 0 || userName == null || userName.isEmpty())
                 return false;
 
             double balance1 = account1.getBalance();
@@ -174,10 +194,10 @@ public class AccountService {
         return account1.transfer(account2, amount) &&  saveAccount(account1) && saveAccount(account2)
                 &&
                 transactionRepo.add(new Transaction( account1.getAccountId(),TransactionType.TRANSFER,
-                amount,balance1,balance1-amount))
+                amount,balance1,balance1-amount ,userName))
                 &&
                 transactionRepo.add(new Transaction( account2.getAccountId(),TransactionType.TRANSFER,
-                amount,balance2,balance2+amount));
+                amount,balance2,balance2+amount ,userName));
 
     }
 }

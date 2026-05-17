@@ -31,7 +31,7 @@ public class TransferController {
             int fromId = Integer.parseInt(fromAccountId.getText());
             int toId = Integer.parseInt(toAccountId.getText());
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount fromAcc = AccountService.find(toId);
+            BankAccount fromAcc = AccountService.findByIdAndPassword(toId);
             if (fromAcc == null){
                 System.out.println("toId not found");
                 errorLabel.setText("toId not found");
@@ -44,7 +44,7 @@ public class TransferController {
 
             }
 
-            BankAccount toAcc = AccountService.find(fromId);
+            BankAccount toAcc = AccountService.findById(fromId);
             if (toAcc == null){
                 System.out.println("fromId not found");
                 errorLabel.setText("fromId not found");

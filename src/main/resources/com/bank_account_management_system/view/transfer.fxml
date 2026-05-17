@@ -19,6 +19,9 @@
     <!-- FROM ACCOUNT -->
     <TextField fx:id="fromAccountId" promptText="Select From Account" />
 
+    <!-- PASSWORD -->
+    <TextField fx:id="passwordField" promptText="Password" />
+
     <!-- TO ACCOUNT -->
     <TextField fx:id="toAccountId" promptText="Select To Account" />
 

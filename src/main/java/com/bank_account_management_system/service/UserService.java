@@ -21,7 +21,7 @@ public class UserService {
 
         if (user == null) { return false; }
 
-        //User Name should be Unique
+        //Username should be Unique
         if (userRepo.find(user.getUsername()) != null) { return  false; }
 
         return userRepo.add(user);
@@ -35,7 +35,8 @@ public class UserService {
 
     public static User findByUserNameAndPassword(String userName , String password) {
 
-     User object = userRepo.find(userName);
+     // it is static
+     User object = new UserRepository().find(userName);
 
      if(object!=null && object.getPassword().equals(password)) { return object; }
 

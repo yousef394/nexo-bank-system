@@ -20,7 +20,8 @@ public class TransactionRepository extends BaseRepository<Transaction , Integer>
                 +transaction.getAmount()+ separator
                 +transaction.getBalanceBefore()+ separator
                 +transaction.getBalanceAfter()+ separator
-                +transaction.getDate();
+                +transaction.getDate() + separator
+                +transaction.getCurrentUser();
     }
 
     @Override
@@ -35,7 +36,8 @@ public class TransactionRepository extends BaseRepository<Transaction , Integer>
                 , TransactionType.valueOf(dataLine[1]),
                 Double.parseDouble(dataLine[2]),Double.parseDouble(dataLine[3]),
                 Double.parseDouble(dataLine[4]),
-                LocalDateTime.parse(dataLine[5]));
+                LocalDateTime.parse(dataLine[5]),
+                 dataLine[6]);
     }
 
     @Override
