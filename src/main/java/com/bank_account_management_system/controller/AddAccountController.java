@@ -1,6 +1,7 @@
 package com.bank_account_management_system.controller;
 import com.bank_account_management_system.model.*;
 import com.bank_account_management_system.service.AccountService;
+import com.bank_account_management_system.service.ControllerService;
 import com.bank_account_management_system.service.ReportService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +33,7 @@ public class AddAccountController {
     public void initialize() {
         // Feed data to the ComboBox as requested
         accountTypeBox.getItems().addAll("Checking Account", "Savings Account", "Home Loan", "Car Loan");
-        AccountService.applySanitizer(errorLabel, nameField, passwordField, balanceField);
+        ControllerService.applySanitizer(errorLabel, nameField, passwordField, balanceField);
     }
 
     @FXML
@@ -172,12 +173,12 @@ public class AddAccountController {
                 break;
             case "Home Loan":
                 addField("loanAmount", "Total Loan Amount");
-                addField("remainingAmount", "Remaining Balance");
+                addField("remainingAmount", "Remaining Amount");
                 addField("propertyAddress", "Property Address"); //
                 break;
             case "Car Loan":
                 addField("loanAmount", "Total Loan Amount");
-                addField("remainingAmount", "Remaining Balance");
+                addField("remainingAmount", "Remaining Amount");
                 addField("carModel", "Car Model"); //
                 break;
         }
@@ -186,7 +187,7 @@ public class AddAccountController {
         TextField tf = new TextField();
         tf.setPromptText(prompt);
         tf.setStyle("-fx-background-radius:8;");
-        AccountService.applySanitizer(errorLabel,tf);
+        ControllerService.applySanitizer(errorLabel,tf);
         dynamicFields.getChildren().add(tf);
         activeFields.put(id, tf); // Save reference to read later
     }

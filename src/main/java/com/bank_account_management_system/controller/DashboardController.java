@@ -1,7 +1,9 @@
 package com.bank_account_management_system.controller;
 import com.bank_account_management_system.model.*;
 import com.bank_account_management_system.service.AccountService;
+import com.bank_account_management_system.service.ControllerService;
 import com.bank_account_management_system.service.ReportService;
+import com.bank_account_management_system.service.UserService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,7 +82,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
         instance = this;
-        welcomeLabel.setText("Hello, " + AccountService.getUser().getUsername());
+        welcomeLabel.setText("Hello, " + UserService.getUser().getUsername());
         loadAccountData();
         // 1. Link columns to BankAccount properties
         // These strings MUST match the getter names (e.g., "accountId" matches "getAccountId()")
@@ -96,6 +98,10 @@ public class DashboardController {
         });
         // 2. Load the data
         loadAccountData();
+    }
+    public void handleReports(ActionEvent event) throws IOException {
+        // Use the existing utility method in ReportService to swap views
+        ReportService.changeScene("reports.fxml", event);
     }
 
     public void loadAccountData() {
@@ -126,9 +132,5 @@ public class DashboardController {
 
     }
 
-    public void handleReports(ActionEvent event) throws IOException {
-        // Use the existing utility method in ReportService to swap views
-        ReportService.changeScene("reports.fxml", event);
-    }
 }
 

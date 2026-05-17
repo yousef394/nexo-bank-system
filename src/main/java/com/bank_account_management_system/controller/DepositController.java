@@ -2,6 +2,7 @@ package com.bank_account_management_system.controller;
 
 import com.bank_account_management_system.model.BankAccount;
 import com.bank_account_management_system.service.AccountService;
+import com.bank_account_management_system.service.ControllerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,15 +19,9 @@ public class DepositController {
     @FXML
     public void initialize() {
         // Feed data to the ComboBox as requested
-        AccountService.applySanitizer(errorLabel, idField, amountField);
+        ControllerService.applySanitizer(errorLabel, idField, amountField);
     }
 
-    // THE AUTOMATIC PART: Called by ReportService
-    public void initData(BankAccount account) {
-        if (account != null) {
-            idField.setText(String.valueOf(account.getAccountId()));
-        }
-    }
 
     @FXML
     public void handleDeposit(ActionEvent event) {
@@ -61,6 +56,13 @@ public class DepositController {
     @FXML
     public void handleCancel(ActionEvent event) {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+    }
+
+    // THE AUTOMATIC PART: Called by ReportService
+    public void initData(BankAccount account) {
+        if (account != null) {
+            idField.setText(String.valueOf(account.getAccountId()));
+        }
     }
 
 }

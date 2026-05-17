@@ -17,13 +17,6 @@ public class AccountService {
     private static final CarLoanRepository carLoanRepo = new CarLoanRepository();
     private static final HomeLoanRepository homeLoanRepo = new HomeLoanRepository();
     private static final TransactionRepository transactionRepo = new TransactionRepository();
-    private static User user;
-    public static void setUser(User u){
-        user = u;
-    }
-    public static User getUser(){
-        return user;
-    }
     public static boolean createAccount(BankAccount account) {
         if (account == null) { return false; }
 
@@ -186,15 +179,5 @@ public class AccountService {
                 transactionRepo.add(new Transaction( account2.getAccountId(),TransactionType.TRANSFER,
                 amount,balance2,balance2+amount));
 
-    }
-    public static void applySanitizer(Label errorLabel,TextField... fields) {
-        for (TextField field : fields) {
-            field.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null && newValue.contains("#//#")) {
-                    field.setText(oldValue); // Revert to what it was before the illegal char
-                    errorLabel.setText("The sequence '#//#' is reserved for system use.");
-                }
-            });
-        }
     }
 }
