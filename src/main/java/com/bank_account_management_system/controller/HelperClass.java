@@ -1,9 +1,7 @@
-package com.bank_account_management_system.service;
+package com.bank_account_management_system.controller;
 
 import com.bank_account_management_system.Repository.*;
 import com.bank_account_management_system.app.MainApplication;
-import com.bank_account_management_system.controller.DepositController;
-import com.bank_account_management_system.controller.WithdrawController;
 import com.bank_account_management_system.model.BankAccount;
 import com.bank_account_management_system.model.Transaction;
 import javafx.event.ActionEvent;
@@ -15,24 +13,29 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-
-import java.io.IOException;
+import com.bank_account_management_system.Repository.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.io.IOException;
 
-public class ReportService{
-    // Repositories needed for real data
-    private static final TransactionRepository transactionRepo = new TransactionRepository();
-    private static final CheckingAccountRepository checkingRepo = new CheckingAccountRepository();
-    private static final SavingsAccountRepository savingsRepo = new SavingsAccountRepository();
-    private static final CarLoanRepository carLoanRepo = new CarLoanRepository();
-    private static final HomeLoanRepository homeLoanRepo = new HomeLoanRepository();
+public class HelperClass {
+    public static void applySanitizer(Label errorLabel, TextField... fields) {
+        for (TextField field : fields) {
+            field.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && newValue.contains("#//#")) {
+                    field.setText(oldValue); // Revert to what it was before the illegal char
+                    errorLabel.setText("The sequence '#//#' is reserved for system use.");
+                }
+            });
+        }
+    }
     static public void changeScene(String toPage, ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("/com/bank_account_management_system/view/"+toPage));
         Parent root = loader.load();
@@ -62,7 +65,7 @@ public class ReportService{
     }
 
     public static void openActionPopup(String fxmlPath, BankAccount selectedAccount) throws IOException {
-        FXMLLoader loader = new FXMLLoader(ReportService.class.getResource("/com/bank_account_management_system/view/" + fxmlPath));
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("/com/bank_account_management_system/view/" + fxmlPath));
         Parent root = loader.load();
 
         // Get the controller of the window we just loaded
@@ -88,6 +91,17 @@ public class ReportService{
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
+
+
+
+
+
+    // Repositories needed for real data
+    private static final TransactionRepository transactionRepo = new TransactionRepository();
+    private static final CheckingAccountRepository checkingRepo = new CheckingAccountRepository();
+    private static final SavingsAccountRepository savingsRepo = new SavingsAccountRepository();
+    private static final CarLoanRepository carLoanRepo = new CarLoanRepository();
+    private static final HomeLoanRepository homeLoanRepo = new HomeLoanRepository();
     public static void showBarChart(BarChart reportBarChart, PieChart reportPieChart, TextArea reportArea) {
         // 1. Toggle visibility and layout management
         reportBarChart.setVisible(true);

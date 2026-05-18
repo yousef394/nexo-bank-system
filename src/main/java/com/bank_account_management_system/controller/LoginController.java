@@ -2,8 +2,6 @@ package com.bank_account_management_system.controller;
 
 import com.bank_account_management_system.Repository.UserRepository;
 import com.bank_account_management_system.model.User;
-import com.bank_account_management_system.service.AccountService;
-import com.bank_account_management_system.service.ReportService;
 import com.bank_account_management_system.service.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +33,7 @@ public class LoginController {
 
         if (userAccount != null) {
             UserService.setUser(userAccount);
-            ReportService.changeScene("dashboard.fxml", event);
+            HelperClass.changeScene("dashboard.fxml", event);
 
             // Move to the Dashboard/Main Screen
             // You can store 'userAccount' in a static variable to know who is logged in

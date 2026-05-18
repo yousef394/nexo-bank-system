@@ -1,8 +1,6 @@
 package com.bank_account_management_system.controller;
 import com.bank_account_management_system.model.*;
 import com.bank_account_management_system.service.AccountService;
-import com.bank_account_management_system.service.ControllerService;
-import com.bank_account_management_system.service.ReportService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -33,7 +31,7 @@ public class AddAccountController {
     public void initialize() {
         // Feed data to the ComboBox as requested
         accountTypeBox.getItems().addAll("Checking Account", "Savings Account", "Home Loan", "Car Loan");
-        ControllerService.applySanitizer(errorLabel, nameField, passwordField, balanceField);
+        HelperClass.applySanitizer(errorLabel, nameField, passwordField, balanceField);
     }
 
     @FXML
@@ -152,7 +150,7 @@ public class AddAccountController {
     }
 
     public void handleCancel(ActionEvent actionEvent) {
-        ReportService.closePopup(actionEvent);
+        HelperClass.closePopup(actionEvent);
     }
 
     public void handleTypeChange() {
@@ -187,7 +185,7 @@ public class AddAccountController {
         TextField tf = new TextField();
         tf.setPromptText(prompt);
         tf.setStyle("-fx-background-radius:8;");
-        ControllerService.applySanitizer(errorLabel,tf);
+        HelperClass.applySanitizer(errorLabel,tf);
         dynamicFields.getChildren().add(tf);
         activeFields.put(id, tf); // Save reference to read later
     }

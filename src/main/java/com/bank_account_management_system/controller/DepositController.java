@@ -2,25 +2,25 @@ package com.bank_account_management_system.controller;
 
 import com.bank_account_management_system.model.BankAccount;
 import com.bank_account_management_system.service.AccountService;
-import com.bank_account_management_system.service.ControllerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
 public class DepositController {
     public Label errorLabel;
-    public TextField passwordField;
+    public PasswordField passwordField;
     @FXML private TextField idField;
     @FXML private TextField amountField;
 
     @FXML
     public void initialize() {
         // Feed data to the ComboBox as requested
-        ControllerService.applySanitizer(errorLabel, idField, amountField);
+        HelperClass.applySanitizer(errorLabel, idField, amountField);
     }
 
 

@@ -3,17 +3,17 @@ package com.bank_account_management_system.controller;
 import com.bank_account_management_system.model.BankAccount;
 import com.bank_account_management_system.model.CheckingAccount;
 import com.bank_account_management_system.service.AccountService;
-import com.bank_account_management_system.service.ControllerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class TransferController {
 
-    public TextField passwordField;
+    @FXML public PasswordField passwordField;
     @FXML private TextField fromAccountId;
     @FXML private TextField toAccountId;
     @FXML private TextField amountField;
@@ -23,7 +23,7 @@ public class TransferController {
     @FXML
     public void initialize() {
         // Feed data to the ComboBox as requested
-        ControllerService.applySanitizer(errorLabel, fromAccountId, toAccountId, amountField);
+        HelperClass.applySanitizer(errorLabel, fromAccountId, toAccountId, amountField);
 
     }
     @FXML
