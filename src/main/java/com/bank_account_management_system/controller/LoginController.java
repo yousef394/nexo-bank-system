@@ -1,5 +1,6 @@
 package com.bank_account_management_system.controller;
 
+import com.bank_account_management_system.Repository.UserRepository;
 import com.bank_account_management_system.model.User;
 import com.bank_account_management_system.service.AccountService;
 import com.bank_account_management_system.service.ReportService;
@@ -28,6 +29,7 @@ public class LoginController {
     public void handleLogin(ActionEvent event) throws IOException {
         String name = usernameField.getText();
         String pass = passwordField.getText();
+        UserRepository repo = new UserRepository();
         // Call the service
         User userAccount = UserService.findByUserNameAndPassword(name, pass);
 

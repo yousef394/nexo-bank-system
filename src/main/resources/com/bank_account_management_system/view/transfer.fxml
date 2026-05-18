@@ -27,6 +27,7 @@
 
     <!-- AMOUNT -->
     <TextField fx:id="amountField" promptText="Enter Amount" style="-fx-background-radius:8;" />
+   <TextField fx:id="amountField1" layoutX="30.0" layoutY="157.0" promptText="Enter Password" style="-fx-background-radius:8;" />
 
     <!-- ERROR MESSAGE -->
     <Label fx:id="errorLabel" style="-fx-text-fill:red;" />
