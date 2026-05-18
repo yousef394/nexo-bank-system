@@ -185,12 +185,5 @@ public class HelperClass {
                 "Total Accounts Managed: " + (checking + savings + loans));
     }
 
-    public static ArrayList<Transaction> generateAccountReport(int id)  {
-        return transactionRepo.getTransactionsByAccountId(id);
-    }
-
-    public static ArrayList<Transaction> generateTransactionReport() {
-        return transactionRepo.getAll();
-    }
 }
 
