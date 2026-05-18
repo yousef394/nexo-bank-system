@@ -7,14 +7,6 @@ import java.util.ArrayList;
 
 public class UserService {
 
-    private final static UserRepository userRepo = new UserRepository();
-    private static User user;
-    public static void setUser(User u){
-        user = u;
-    }
-    public static User getUser(){
-        return user;
-    }
 
 
     public static boolean createUser(User user) {

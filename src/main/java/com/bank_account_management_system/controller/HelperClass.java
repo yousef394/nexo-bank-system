@@ -4,6 +4,7 @@ import com.bank_account_management_system.Repository.*;
 import com.bank_account_management_system.app.MainApplication;
 import com.bank_account_management_system.model.BankAccount;
 import com.bank_account_management_system.model.Transaction;
+import com.bank_account_management_system.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,14 @@ import java.util.Map;
 import java.io.IOException;
 
 public class HelperClass {
+    private final static UserRepository userRepo = new UserRepository();
+    private static User user;
+    public static void setUser(User u){
+        user = u;
+    }
+    public static User getUser(){
+        return user;
+    }
     public static void applySanitizer(Label errorLabel, TextField... fields) {
         for (TextField field : fields) {
             field.textProperty().addListener((observable, oldValue, newValue) -> {

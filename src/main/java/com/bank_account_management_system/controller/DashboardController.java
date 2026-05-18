@@ -78,7 +78,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
         instance = this;
-        welcomeLabel.setText("Hello, " + UserService.getUser().getUsername());
+        welcomeLabel.setText("Hello, " + HelperClass.getUser().getUsername());
         loadAccountData();
         // 1. Link columns to BankAccount properties
         // These strings MUST match the getter names (e.g., "accountId" matches "getAccountId()")

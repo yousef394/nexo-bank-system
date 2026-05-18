@@ -32,7 +32,7 @@ public class LoginController {
         User userAccount = UserService.findByUserNameAndPassword(name, pass);
 
         if (userAccount != null) {
-            UserService.setUser(userAccount);
+            HelperClass.setUser(userAccount);
             HelperClass.changeScene("dashboard.fxml", event);
 
             // Move to the Dashboard/Main Screen
