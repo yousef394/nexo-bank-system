@@ -64,7 +64,7 @@ public class TransferController {
                 return;
             }
             // Call the transfer method in AccountService
-            boolean success = AccountService.transfer(fromId, password,toId, amount);
+            boolean success = AccountService.transfer(fromId, password,toId, amount, HelperClass.getUser().getUsername());
 
             if (success) {
                 System.out.println("Transfer Successful!");

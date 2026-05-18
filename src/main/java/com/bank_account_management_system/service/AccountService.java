@@ -145,8 +145,7 @@ public class AccountService {
 
     }
 
-    public static boolean deposit(int id,String password, Double amount) {
-        String userName = HelperClass.getUser().getUsername();
+    public static boolean deposit(int id,String password, Double amount, String userName) {
         BankAccount account = findByIdAndPassword(id,password);
 
         if (account == null || amount == null || amount <= 0 || userName == null || userName.isEmpty())
@@ -161,8 +160,7 @@ public class AccountService {
 
     }
 
-    public static boolean withdraw(int id,String password, Double amount) {
-        String userName = HelperClass.getUser().getUsername();
+    public static boolean withdraw(int id,String password, Double amount, String userName) {
         BankAccount account = findByIdAndPassword(id,password);
 
         if (account == null || amount == null || amount <= 0 ||userName == null || userName.isEmpty() )
@@ -176,8 +174,7 @@ public class AccountService {
                 amount,balance,balance-amount ,userName) );
     }
 
-    public static boolean transfer(int idFrom,String password , int idTo, double amount) {
-            String userName = HelperClass.getUser().getUsername();
+    public static boolean transfer(int idFrom,String password , int idTo, double amount, String userName) {
             BankAccount account1 = findByIdAndPassword(idFrom,password);
             BankAccount account2 = findById(idTo);
 

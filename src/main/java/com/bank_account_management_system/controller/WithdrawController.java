@@ -50,7 +50,7 @@ public class WithdrawController {
                 return;
             }
             // Calls your Checking-specific logic
-            if (AccountService.withdraw(id, password,amount)) {
+            if (AccountService.withdraw(id, password,amount, HelperClass.getUser().getUsername())) {
                 DashboardController.instance.loadAccountData();
                 handleCancel(event);
             }

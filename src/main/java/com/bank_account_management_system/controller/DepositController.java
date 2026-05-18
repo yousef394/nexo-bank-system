@@ -41,7 +41,7 @@ public class DepositController {
                 errorLabel.setText("can't deposit less than .01");
                 return;
             }
-            boolean success = AccountService.deposit(id,password, amount);
+            boolean success = AccountService.deposit(id,password, amount, HelperClass.getUser().getUsername());
             if (success) {
                 DashboardController.instance.loadAccountData(); // Refresh the table
                 handleCancel(event);
