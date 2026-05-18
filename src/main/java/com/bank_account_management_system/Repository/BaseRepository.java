@@ -99,9 +99,5 @@ import java.util.ArrayList;
       //abstract method
       protected abstract K getKey(T object);
 
-      protected String sanitize(String input) {
-          if (input == null) return "";
-          // Replace the forbidden sequence with a safe space
-          return input.replace(separator, " ");
-      }
+
   }
