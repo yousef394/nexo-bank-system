@@ -25,7 +25,6 @@
             <Region HBox.hgrow="ALWAYS"/>
 
             <Button text="Logout"
-                    fx:id="logoutBtn"
                     onAction="#handleLogout"
                     prefWidth="120" prefHeight="40"
                     style="-fx-background-color:#2563EB; -fx-text-fill:white; -fx-background-radius:8;" />
@@ -56,7 +55,7 @@
                     <Label text="Total Balance"
                            style="-fx-text-fill:#cbd5e1; -fx-font-size:18;" />
 
-                    <Label fx:id="balanceLabel"
+                    <Label fx:id="totalBalanceLabel"
                            text="0"
                            style="-fx-text-fill:#3B82F6; -fx-font-size:34; -fx-font-weight:bold;" />
                 </VBox>
@@ -69,7 +68,7 @@
                     <Label text="Accounts Count"
                            style="-fx-text-fill:#cbd5e1; -fx-font-size:18;" />
 
-                    <Label fx:id="accountsCountLabel"
+                    <Label fx:id="totalAccountsLabel"
                            text="0"
                            style="-fx-text-fill:#22C55E; -fx-font-size:34; -fx-font-weight:bold;" />
                 </VBox>
@@ -82,7 +81,7 @@
                     <Label text="Loans"
                            style="-fx-text-fill:#cbd5e1; -fx-font-size:18;" />
 
-                    <Label fx:id="loansLabel"
+                    <Label fx:id="loanCountLabel"
                            text="0"
                            style="-fx-text-fill:#F97316; -fx-font-size:34; -fx-font-weight:bold;" />
                 </VBox>
@@ -101,6 +100,7 @@
                 <columns>
                     <TableColumn fx:id="idColumn" text="ID" prefWidth="150"/>
                     <TableColumn fx:id="balanceColumn" text="Balance" prefWidth="300"/>
+                    <TableColumn fx:id="nameColumn" text="Name" prefWidth="300"/>
                     <TableColumn fx:id="typeColumn" text="Type" prefWidth="300"/>
                 </columns>
             </TableView>
@@ -108,41 +108,38 @@
             <!-- BUTTONS -->
             <HBox spacing="15" alignment="CENTER">
 
-                <Button fx:id="depositBtn"
-                        text="Deposit"
+                <Button text="Deposit"
                         onAction="#handleDeposit"
                         prefWidth="150" prefHeight="50"
                         style="-fx-background-color:#2563EB; -fx-text-fill:white;" />
 
-                <Button fx:id="withdrawBtn"
-                        text="Withdraw"
+                <Button text="Withdraw"
                         onAction="#handleWithdraw"
                         prefWidth="150" prefHeight="50"
                         style="-fx-background-color:#DC2626; -fx-text-fill:white;" />
 
-                <Button fx:id="transferBtn"
-                        text="Transfer"
+                <Button text="Transfer"
                         onAction="#handleTransfer"
                         prefWidth="150" prefHeight="50"
                         style="-fx-background-color:#7C3AED; -fx-text-fill:white;" />
 
-                <Button fx:id="addAccountBtn"
-                        text="Add Account"
+                <Button text="View Reports"
+                        onAction="#handleReports"
+                        style="-fx-background-color: #6366F1; -fx-text-fill: white;"
+                        prefWidth="150" prefHeight="50"/>
+                <Button text="Add Account"
                         onAction="#handleAddAccount"
                         prefWidth="150" prefHeight="50"
                         style="-fx-background-color:#16A34A; -fx-text-fill:white;" />
 
-                <Button fx:id="removeAccountBtn"
-                        text="Delete Account"
+                <Button text="Delete Account"
                         onAction="#handleDeleteAccount"
                         prefWidth="150" prefHeight="50"
                         style="-fx-background-color:#B91C1C; -fx-text-fill:white;" />
-
             </HBox>
 
             <!-- FOOTER -->
-            <Label fx:id="lastUpdatedLabel"
-                   text="Last Updated: Today"
+            <Label text="Last Updated: Today"
                    style="-fx-text-fill:#cbd5e1; -fx-font-size:14;" />
 
         </VBox>

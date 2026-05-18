@@ -3,6 +3,8 @@ package com.bank_account_management_system.service;
 
 import com.bank_account_management_system.Repository.*;
 import com.bank_account_management_system.model.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 
 import java.util.ArrayList;
@@ -196,5 +198,14 @@ public class AccountService {
                 amount,balance2,balance2+amount ,userName));
 
     }
-
+    public static void applySanitizer(Label errorLabel,TextField... fields) {
+        for (TextField field : fields) {
+            field.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && newValue.contains("#//#")) {
+                    field.setText(oldValue); // Revert to what it was before the illegal char
+                    errorLabel.setText("The sequence '#//#' is reserved for system use.");
+                }
+            });
+        }
+    }
 }

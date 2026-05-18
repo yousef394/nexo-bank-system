@@ -1,15 +1,10 @@
 package com.bank_account_management_system.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
-import javafx.scene.text.Text;
 
 import static com.bank_account_management_system.service.ReportService.*;
 
@@ -30,7 +25,7 @@ public class ReportsController {
     }
 
 
-    public void handleGenerateReport(ActionEvent actionEvent) {
+    public void handleGenerateReport() {
         String selected = reportTypeBox.getValue();
 
         if (selected == null) {

@@ -48,8 +48,7 @@
                        style="-fx-text-fill:#EF4444;" />
 
                 <!-- LOGIN BUTTON -->
-                <Button fx:id="btnLogin"
-                        text="Login"
+                <Button text="Login"
                         onAction="#handleLogin"
                         prefWidth="200"
                         prefHeight="45"

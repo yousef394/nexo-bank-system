@@ -5,102 +5,56 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.chart.*?>
 
-<!-- Main Layout -->
 <BorderPane prefHeight="650" prefWidth="950"
             stylesheets="@Reports.css"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.bank_account_management_system.controller.ReportsController">
 
-    <!-- HEADER: Standard across screens -->
     <top>
-        <HBox alignment="CENTER_LEFT"
-              style="-fx-background-color:#0D2F66;"
-              prefHeight="70">
+        <HBox alignment="CENTER_LEFT" style="-fx-background-color:#0D2F66;" prefHeight="70">
             <padding>
                 <Insets left="25"/>
             </padding>
-            <Label text="Reports"
-                   style="-fx-text-fill:white; -fx-font-size:24; -fx-font-weight:bold;" />
+            <Label text="Reports" style="-fx-text-fill:white; -fx-font-size:24; -fx-font-weight:bold;" />
         </HBox>
     </top>
 
-    <!-- CONTENT AREA -->
     <center>
         <VBox alignment="TOP_CENTER" spacing="30">
             <padding>
                 <Insets top="40" bottom="40" left="40" right="40"/>
             </padding>
 
-            <!-- 1. Report Selector Panel -->
-            <VBox spacing="15" alignment="CENTER"
-                  maxWidth="400"
-                  style="-fx-background-color:#16325C;
-                         -fx-background-radius:15;
-                         -fx-padding:30;
-                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);">
-
-                <Label text="Generate Report"
-                       style="-fx-text-fill:white; -fx-font-size:18; -fx-font-weight:bold;" />
-
-                <ComboBox fx:id="reportTypeBox"
-                          prefWidth="250"
-                          promptText="Select Report Type"
-                          style="-fx-background-radius:8;"/>
-
-                <Button text="Generate"
-                        onAction="#handleGenerateReport"
-                        prefWidth="160"
-                        prefHeight="35"
-                        style="-fx-background-color:#2563EB;
-                               -fx-text-fill:white;
-                               -fx-background-radius:8;
-                               -fx-font-weight:bold;" />
+            <VBox spacing="15" alignment="CENTER" maxWidth="400"
+                  style="-fx-background-color:#16325C; -fx-background-radius:15; -fx-padding:30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);">
+                <Label text="Generate Report" style="-fx-text-fill:white; -fx-font-size:18; -fx-font-weight:bold;" />
+                <ComboBox fx:id="reportTypeBox" prefWidth="250" promptText="Select Report Type" style="-fx-background-radius:8;"/>
+                <Button text="Generate" onAction="#handleGenerateReport" prefWidth="160" prefHeight="35"
+                        style="-fx-background-color:#2563EB; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold;" />
             </VBox>
 
-            <!-- 2. Report Output Panel -->
-            <VBox maxWidth="850"
-                  VBox.vgrow="ALWAYS"
-                  style="-fx-background-color:#16325C;
-                         -fx-background-radius:15;
-                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);">
-
+            <VBox maxWidth="850" VBox.vgrow="ALWAYS"
+                  style="-fx-background-color:#16325C; -fx-background-radius:15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);">
                 <padding>
                     <Insets top="20" bottom="20" left="25" right="25"/>
                 </padding>
 
-                <Label text="Report Output"
-                       style="-fx-text-fill:white; -fx-font-size:16; -fx-font-weight:bold;" />
+                <Label text="Report Output" style="-fx-text-fill:white; -fx-font-size:16; -fx-font-weight:bold;" />
 
-                <!-- Bar Chart Section with Inline Axis Styling -->
-                <BarChart fx:id="reportBarChart" title="Transactions per Account" animated="false" prefHeight="350">
+                <BarChart fx:id="reportBarChart" title="Transactions per Account"
+                          animated="false" prefHeight="350" legendVisible="false">
                     <xAxis><CategoryAxis label="Account ID" tickLabelFill="white"/></xAxis>
                     <yAxis><NumberAxis label="Count" tickLabelFill="white"/></yAxis>
                 </BarChart>
-                <!-- Pie Chart Section: Replaced BarChart -->
-                <PieChart fx:id="reportPieChart"
-                          title="Transactions Distribution"
-                          prefHeight="350"
-                          visible="false" managed="false" />
 
-                <!-- Detailed Text Section -->
-                <Label text="Report Details"
-                       style="-fx-text-fill:white; -fx-padding: 10 0 0 0;" />
+                <PieChart fx:id="reportPieChart" title="Transactions Distribution"
+                          prefHeight="350" visible="false" managed="false"
+                          legendVisible="false" legendSide="RIGHT" />
 
-                <TextArea
-                          fx:id="reportArea"
-                          editable="false"
-                          VBox.vgrow="ALWAYS"
-                          wrapText="true"
-                          prefHeight="300"
-                          style="-fx-font-family: 'Consolas', monospace;
-                                 -fx-control-inner-background:#061A3A;
-                                 -fx-text-fill: white;
-                                 -fx-background-color: #061A3A;
-                                 -fx-border-color: #1A4281;
-                                 -fx-border-radius: 5;
-                                 -fx-background-radius: 5;
-                                 -fx-text-fill: white;"/>
+                <Label text="Report Details" style="-fx-text-fill:white; -fx-padding: 10 0 0 0;" />
+                <TextArea fx:id="reportArea" editable="false" VBox.vgrow="ALWAYS" wrapText="true" prefHeight="300"
+                          style="-fx-font-family: 'Consolas', monospace; -fx-control-inner-background:#061A3A; -fx-text-fill: white; -fx-background-color: #061A3A; -fx-border-color: #1A4281; -fx-border-radius: 5; -fx-background-radius: 5;"/>
             </VBox>
         </VBox>
     </center>

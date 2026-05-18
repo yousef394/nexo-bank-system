@@ -29,12 +29,11 @@
 .chart-vertical-grid-lines {
     -fx-stroke: transparent;
 }
-
-/* Legend Text */
-.chart-legend-item {
+.chart-title {
     -fx-text-fill: white;
+    -fx-font-size: 1.6em;
+    -fx-font-weight: bold;
 }
-
 /* --- PIE CHART STYLING --- */
 
 .chart-pie-label {
@@ -52,10 +51,6 @@
     -fx-text-fill: #061A3A !important;
 }
 
-/* This targets the legend item container */
-.chart-legend-item {
-    -fx-text-fill: white !important;
-}
 
 /* Axis styling to match */
 .axis {
