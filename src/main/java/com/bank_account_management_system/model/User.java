@@ -10,10 +10,12 @@ public class User implements Printable {
 
     //======== Constructor ==========
     public User(String username, String password, String name, String email) {
+
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
+
     }
 
     //======== Getters ==============

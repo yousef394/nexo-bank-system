@@ -20,10 +20,13 @@ public  class CheckingAccountRepository extends BaseRepository<CheckingAccount ,
        if(lineArray.length<7)
            return null;
 
-        return new CheckingAccount(Integer.parseInt(lineArray[0]),lineArray[1]
-                , LocalDateTime.parse(lineArray[2]),lineArray[3]
+        return new CheckingAccount(Integer.parseInt(lineArray[0])
+                ,protecting.decrypt(lineArray[1])
+                , LocalDateTime.parse(lineArray[2])
+                ,lineArray[3]
                 ,Double.parseDouble(lineArray[4])
-                ,Double.parseDouble(lineArray[5]) ,Double.parseDouble(lineArray[6]));
+                ,Double.parseDouble(lineArray[5])
+                ,Double.parseDouble(lineArray[6]));
 
     }
 

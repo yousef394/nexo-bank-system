@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public interface CRUD<T ,K> {
 
-    public boolean add(T object);
+     boolean add(T object);
 
-    public ArrayList<T> getAll();
+     ArrayList<T> getAll();
 
-    public T find(K key);
+     T find(K key);
 
-    public boolean delete(K key);
+     boolean delete(K key);
 
-    public boolean update(T key) ;
+     boolean update(T key) ;
 
 }

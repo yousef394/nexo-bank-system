@@ -23,10 +23,13 @@ public class HomeLoanRepository extends BaseRepository<HomeLoan , Integer> {
         if(lineArray.length<8)
             return null;
 
-        return new HomeLoan(Integer.parseInt(lineArray[0]),lineArray[1]
-                , LocalDateTime.parse(lineArray[2]),lineArray[3]
+        return new HomeLoan(Integer.parseInt(lineArray[0])
+                ,protecting.decrypt(lineArray[1])
+                , LocalDateTime.parse(lineArray[2])
+                ,lineArray[3]
                 ,Double.parseDouble(lineArray[4])
-                ,Double.parseDouble(lineArray[5]) ,Double.parseDouble(lineArray[6]),lineArray[7]);
+                ,Double.parseDouble(lineArray[5])
+                ,Double.parseDouble(lineArray[6]),lineArray[7]);
 
     }
 
