@@ -2,9 +2,8 @@ package com.bank_account_management_system.service;
 
 
 import com.bank_account_management_system.Repository.*;
+import com.bank_account_management_system.controller.HelperClass;
 import com.bank_account_management_system.model.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 
 import java.util.ArrayList;
@@ -147,7 +146,7 @@ public class AccountService {
     }
 
     public static boolean deposit(int id,String password, Double amount) {
-        String userName = UserService.getUser().getUsername();
+        String userName = HelperClass.getUser().getUsername();
         BankAccount account = findByIdAndPassword(id,password);
 
         if (account == null || amount == null || amount <= 0 || userName == null || userName.isEmpty())
@@ -163,7 +162,7 @@ public class AccountService {
     }
 
     public static boolean withdraw(int id,String password, Double amount) {
-        String userName = UserService.getUser().getUsername();
+        String userName = HelperClass.getUser().getUsername();
         BankAccount account = findByIdAndPassword(id,password);
 
         if (account == null || amount == null || amount <= 0 ||userName == null || userName.isEmpty() )
@@ -178,7 +177,7 @@ public class AccountService {
     }
 
     public static boolean transfer(int idFrom,String password , int idTo, double amount) {
-            String userName = UserService.getUser().getUsername();
+            String userName = HelperClass.getUser().getUsername();
             BankAccount account1 = findByIdAndPassword(idFrom,password);
             BankAccount account2 = findById(idTo);
 

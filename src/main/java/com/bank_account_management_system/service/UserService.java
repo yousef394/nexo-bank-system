@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class UserService {
 
+    private final static UserRepository userRepo = new UserRepository();
 
 
     public static boolean createUser(User user) {

@@ -1,7 +1,6 @@
 package com.bank_account_management_system.controller;
 import com.bank_account_management_system.model.*;
 import com.bank_account_management_system.service.AccountService;
-import com.bank_account_management_system.service.UserService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
