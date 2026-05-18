@@ -26,13 +26,13 @@ import java.util.ArrayList;
       }
 
      //for help
-     protected String commonFormat(BankAccount object) {
-         return  object.getAccountId()+separator+
-                 sanitize(object.getPassword())+separator+
-                 object.getDateCreated()+separator+
-                 sanitize(object.getHolderName())+separator+
-                 object.getBalance();
-     }
+//     protected String commonFormat(BankAccount object) {
+//         return  object.getAccountId()+separator+
+//                 sanitize(object.getPassword())+separator+
+//                 object.getDateCreated()+separator+
+//                 sanitize(object.getHolderName())+separator+
+//                 object.getBalance();
+//     }
 
 
       //========CRUD Methods=======

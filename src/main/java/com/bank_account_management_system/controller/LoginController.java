@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
+import static com.bank_account_management_system.service.UserService.findByUserNameAndPassword;
+
 public class LoginController {
     @FXML
     private TextField usernameField;
@@ -30,7 +32,7 @@ public class LoginController {
         String pass = passwordField.getText();
         UserRepository repo = new UserRepository();
         // Call the service
-        User userAccount = repo.findByUserNameAndPassword(name, pass);
+        User userAccount = findByUserNameAndPassword(name, pass);
 
         if (userAccount != null) {
             ReportService.changeScene("dashboard.fxml", event);
