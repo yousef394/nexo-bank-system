@@ -28,7 +28,7 @@
 
             <Region HBox.hgrow="ALWAYS" />
 
-            <Button onAction="#handleGenerateReport" prefHeight="40" prefWidth="110" style="                         -fx-background-color:#2563EB;                         -fx-text-fill:white;                         -fx-font-size:14;                         -fx-font-weight:bold;                         -fx-background-radius:12;                         -fx-cursor:hand;                     " text="Return" />
+            <Button onAction="#handleReturn" prefHeight="40" prefWidth="110" style="                         -fx-background-color:#2563EB;                         -fx-text-fill:white;                         -fx-font-size:14;                         -fx-font-weight:bold;                         -fx-background-radius:12;                         -fx-cursor:hand;                     " text="Return" />
         </HBox>
     </top>
 
@@ -48,7 +48,7 @@
 
                 <ComboBox fx:id="reportTypeBox" prefHeight="40" prefWidth="280" promptText="Select Report Type" style="                             -fx-background-radius:10;                             -fx-font-size:14;                           " />
 
-                <Button onAction="#handleGenerateReport" prefHeight="42" prefWidth="180" style="                             -fx-background-color:#2563EB;                             -fx-text-fill:white;                             -fx-font-size:15;                             -fx-font-weight:bold;                             -fx-background-radius:12;                             -fx-cursor:hand;                         " text="Generate" />
+                <Button onAction="#handleGenerateReport" prefHeight="42" prefWidth="180" style="                           -fx-background-color:#2563EB;                             -fx-text-fill:white;                             -fx-font-size:15;                             -fx-font-weight:bold;                             -fx-background-radius:12;                             -fx-cursor:hand;                         " text="Generate" />
 
             </VBox>
 
@@ -70,12 +70,9 @@
 
                 </BarChart>
 
-<<<<<<< HEAD
                 <PieChart fx:id="reportPieChart" title="Accounts Distribution"
                           prefHeight="350" visible="false" managed="false"
                           legendVisible="false" legendSide="RIGHT" />
-=======
-                <PieChart fx:id="reportPieChart" legendVisible="false" managed="false" prefHeight="350" title="Transactions Distribution" visible="false" />
 
                 <!-- DETAILS -->
                 <VBox spacing="10">
@@ -85,7 +82,6 @@
                     <TextArea fx:id="reportArea" editable="false" prefHeight="220" style="                                 -fx-control-inner-background:#061A3A;                                 -fx-background-color:#061A3A;                                 -fx-text-fill:white;                                 -fx-font-family:'Consolas';                                 -fx-font-size:14;                                 -fx-background-radius:12;                                 -fx-border-radius:12;                                 -fx-border-color:#1E4E9B;                               " wrapText="true" />
 
                 </VBox>
->>>>>>> 8dad7643fa5c38ff2c4792538d5579d9000cd5bf
 
             </VBox>
 

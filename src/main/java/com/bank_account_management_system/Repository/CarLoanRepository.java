@@ -34,7 +34,7 @@ public class CarLoanRepository extends BaseRepository<CarLoan , Integer> {
         return commonFormat(object)
                 + separator+ object.getLoanAmount()
                 + separator+ object.getRemainingAmount()
-                + separator+ sanitize(object.getCarModel());
+                + separator+ (object.getCarModel());
     }
 
     @Override

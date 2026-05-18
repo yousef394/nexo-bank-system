@@ -96,7 +96,7 @@ public class DashboardController {
     }
     public void handleReports(ActionEvent event) throws IOException {
         // Use the existing utility method in ReportService to swap views
-        HelperClass.changeScene("reports.fxml", event);
+        HelperClass.changeScene("Reports.fxml", event);
     }
 
     public void loadAccountData() {

@@ -20,11 +20,11 @@ import java.util.ArrayList;
       protected String commonFormat(BankAccount object) {
           return object.getAccountId() +
                   separator +
-                  protecting.encrypt(sanitize(object.getPassword())) +
+                  protecting.encrypt(object.getPassword()) +
                   separator +
                   object.getDateCreated() +
                   separator +
-                  sanitize(object.getHolderName()) +
+                  object.getHolderName() +
                   separator +
                   object.getBalance();
       }
