@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 
@@ -19,12 +21,20 @@ public class LoginController {
     private TextField usernameField;
     @FXML
     private Label errorLabel;
+    @FXML
+    private ImageView imageView;
 
     @FXML
     private PasswordField passwordField;
 
     @FXML
     public void initialize() {
+        Rectangle clip = new Rectangle();
+        clip.setWidth(imageView.getFitWidth());
+        clip.setHeight(imageView.getFitHeight());
+        clip.setArcWidth(40);
+        clip.setArcHeight(40);
+        imageView.setClip(clip);
     }
     @FXML
     public void handleLogin(ActionEvent event) throws IOException {
