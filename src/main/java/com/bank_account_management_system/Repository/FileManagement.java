@@ -14,7 +14,7 @@ public abstract class FileManagement <T> {
         this.fileName = fileName;
     }
 
-    //=========common methods=========
+    //========= file methods =========
     protected boolean appendLine(String Line)  {
 
         boolean flag=false;
@@ -70,7 +70,7 @@ public abstract class FileManagement <T> {
     }
 
 
-    //===========abstract methods============
+    //=========== abstract methods ============
     protected abstract String format(T object);
     protected abstract T  parse(String line);
 

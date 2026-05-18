@@ -78,7 +78,7 @@ public abstract class BankAccount implements Printable, Auditable {
     }
 
     protected void setBalance(double balance) {
-        this.balance = Math.max(balance, 0);
+        this.balance = balance;
     }
 
     // ================= Core Logic =================

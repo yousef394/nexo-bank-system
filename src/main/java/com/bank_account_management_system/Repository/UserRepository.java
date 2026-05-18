@@ -19,7 +19,7 @@ public class UserRepository extends BaseRepository<User ,String> implements CRUD
     protected String format(User object) {
         return object.getUsername() +
                 separator +
-                object.getPassword() +
+               protecting.encrypt(object.getPassword()) +
                 separator +
                 object.getName() +
                 separator +
@@ -34,7 +34,10 @@ public class UserRepository extends BaseRepository<User ,String> implements CRUD
         if(lineArray.length<4)
             return null;
 
-        return new User(lineArray[0],lineArray[1],lineArray[2],lineArray[3]);
+        return new User(lineArray[0]
+                ,protecting.decrypt(lineArray[1])
+                ,lineArray[2]
+                ,lineArray[3]);
     }
 
     @Override

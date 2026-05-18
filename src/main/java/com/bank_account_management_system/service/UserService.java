@@ -7,14 +7,13 @@ import java.util.ArrayList;
 
 public class UserService {
 
-    private final static UserRepository userRepo = new UserRepository();
-
+    private final static  UserRepository userRepo = new UserRepository();
 
     public static boolean createUser(User user) {
 
         if (user == null) { return false; }
 
-        //User Name should be Unique
+        //Username should be Unique
         if (userRepo.find(user.getUsername()) != null) { return  false; }
 
         return userRepo.add(user);
@@ -28,7 +27,8 @@ public class UserService {
 
     public static User findByUserNameAndPassword(String userName , String password) {
 
-     User object = userRepo.find(userName);
+     // it is static
+     User object = new UserRepository().find(userName);
 
      if(object!=null && object.getPassword().equals(password)) { return object; }
 

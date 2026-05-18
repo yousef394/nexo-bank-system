@@ -1,6 +1,7 @@
 package com.bank_account_management_system.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 public class Transaction implements Printable {
@@ -11,9 +12,10 @@ public class Transaction implements Printable {
     private int AccountId;
     private double BalanceBefore;
     private double BalanceAfter;
+    private String currentUser;
 
     public Transaction(int AccountId, TransactionType type, double amount,
-                double BalanceBefore,double BalanceAfter) {
+                double BalanceBefore,double BalanceAfter , String currentUser) {
 
         this.type = type;
         this.amount = amount;
@@ -22,16 +24,18 @@ public class Transaction implements Printable {
         this.BalanceBefore = BalanceBefore;
         this.BalanceAfter = BalanceAfter;
         date = LocalDateTime.now();
+        this.currentUser = currentUser;
     }
 
     public Transaction( int AccountId, TransactionType type, double amount,
-                       double BalanceBefore,double BalanceAfter ,LocalDateTime date) {
+                       double BalanceBefore,double BalanceAfter ,LocalDateTime date ,  String currentUser) {
         this.AccountId = AccountId;
         this.type = type;
         this.amount = amount;
         this.BalanceBefore = BalanceBefore;
         this.BalanceAfter = BalanceAfter;
         this.date = date;
+        this.currentUser = currentUser;
     }
 
 
@@ -53,6 +57,9 @@ public class Transaction implements Printable {
     public LocalDateTime getDate() {
         return date;
     }
+    public String getCurrentUser() {
+        return currentUser;
+    }
 
     public void setDate(LocalDateTime date) {
         this.date = date;
@@ -72,7 +79,9 @@ public class Transaction implements Printable {
     public void setBalanceAfter(double BalanceAfter) {
         this.BalanceAfter = BalanceAfter;
     }
-
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
 
 
     @Override

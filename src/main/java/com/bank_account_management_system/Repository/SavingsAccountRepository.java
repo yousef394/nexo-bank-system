@@ -21,9 +21,12 @@ public class SavingsAccountRepository extends BaseRepository<SavingsAccount , In
         if(lineArray.length<6)
             return null;
 
-        return new SavingsAccount(Integer.parseInt(lineArray[0]),lineArray[1]
-                , LocalDateTime.parse(lineArray[2]),lineArray[3]
-                ,Double.parseDouble(lineArray[4]),Double.parseDouble(lineArray[5]));
+        return new SavingsAccount(Integer.parseInt(lineArray[0])
+                ,protecting.decrypt(lineArray[1])
+                , LocalDateTime.parse(lineArray[2])
+                ,lineArray[3]
+                ,Double.parseDouble(lineArray[4])
+                ,Double.parseDouble(lineArray[5]));
 
     }
 

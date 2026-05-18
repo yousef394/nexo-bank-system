@@ -12,11 +12,15 @@ import java.util.ArrayList;
           super( fileName);
       }
 
+
+      // for Encryption & Decryption
+      Protecting protecting = new Protecting("1234567890123456");
+
       //Helper Method
       protected String commonFormat(BankAccount object) {
           return object.getAccountId() +
                   separator +
-                  object.getPassword() +
+                  protecting.encrypt(object.getPassword()) +
                   separator +
                   object.getDateCreated() +
                   separator +
@@ -24,15 +28,6 @@ import java.util.ArrayList;
                   separator +
                   object.getBalance();
       }
-
-     //for help
-     protected String commonFormat(BankAccount object) {
-         return  object.getAccountId()+separator+
-                 sanitize(object.getPassword())+separator+
-                 object.getDateCreated()+separator+
-                 sanitize(object.getHolderName())+separator+
-                 object.getBalance();
-     }
 
 
       //========CRUD Methods=======
@@ -104,9 +99,5 @@ import java.util.ArrayList;
       //abstract method
       protected abstract K getKey(T object);
 
-      protected String sanitize(String input) {
-          if (input == null) return "";
-          // Replace the forbidden sequence with a safe space
-          return input.replace(separator, " ");
-      }
+
   }
