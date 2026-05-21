@@ -184,7 +184,7 @@
 
                 <!-- TABLE -->
 
-                <TableView fx:id="accountsTable" minHeight="170" prefHeight="360" style="-fx-background-color: transparent; -fx-control-inner-background: #102B59; -fx-table-cell-border-color: rgba(255,255,255,0.03); -fx-selection-bar: #2563EB; -fx-selection-bar-text: white; -fx-font-size: 16; -fx-background-radius: 18;">
+                <TableView fx:id="accountsTable" prefHeight="360" style="-fx-background-color: transparent; -fx-control-inner-background: #102B59; -fx-table-cell-border-color: rgba(255,255,255,0.03); -fx-selection-bar: #2563EB; -fx-selection-bar-text: white; -fx-font-size: 16; -fx-background-radius: 18;">
 
                     <columns>
 

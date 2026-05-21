@@ -117,6 +117,7 @@ public class HelperClass {
         reportBarChart.setManaged(true);
         reportPieChart.setVisible(false);
         reportPieChart.setManaged(false);
+        reportBarChart.setAnimated(true);
 
         // 2. Clear previous data to prevent overlapping
         reportBarChart.getData().clear();
@@ -164,7 +165,7 @@ public class HelperClass {
         reportPieChart.setManaged(true);
         reportBarChart.setVisible(false);
         reportBarChart.setManaged(false);
-
+        reportPieChart.setAnimated(true);
         reportPieChart.getData().clear();
 
 // 1. Get actual counts from all account repositories
