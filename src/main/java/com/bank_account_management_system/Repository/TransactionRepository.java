@@ -10,7 +10,7 @@ public class TransactionRepository extends BaseRepository<Transaction , Integer>
 
 
     public TransactionRepository() {
-        super("src/main/resources/Files/transactionsFile.txt");
+        super("../Files/transactionsFile.txt");
     }
 
     @Override
