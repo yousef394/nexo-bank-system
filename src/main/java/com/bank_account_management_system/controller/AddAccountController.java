@@ -1,7 +1,6 @@
 package com.bank_account_management_system.controller;
 import com.bank_account_management_system.model.*;
 import com.bank_account_management_system.service.AccountService;
-import com.bank_account_management_system.service.ReportService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -10,8 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class AddAccountController {
     @FXML
@@ -26,14 +24,14 @@ public class AddAccountController {
     private TextField balanceField;
     @FXML
     private VBox dynamicFields;
-    // Store dynamically created fields to read them during creation
-    private Map<String, TextField> activeFields = new HashMap<>();
+
+    // THE CHANGE: Use a simple ArrayList instead of a HashMap
+    private ArrayList<TextField> activeFields = new ArrayList<>();
 
     @FXML
     public void initialize() {
-        // Feed data to the ComboBox as requested
         accountTypeBox.getItems().addAll("Checking Account", "Savings Account", "Home Loan", "Car Loan");
-        AccountService.applySanitizer(errorLabel, nameField, passwordField, balanceField);
+        HelperClass.applySanitizer(errorLabel, nameField, passwordField, balanceField);
     }
 
     @FXML
@@ -47,8 +45,8 @@ public class AddAccountController {
 
             }
             if ( nameField== null ||
-                nameField.getText().isBlank()||passwordField== null ||
-                passwordField.getText().isBlank()  ) {
+                    nameField.getText().isBlank()||passwordField== null ||
+                    passwordField.getText().isBlank()  ) {
                 System.out.println("Error: Please fill in all String fields.");
                 errorLabel.setText("Error: Please fill in all String fields.");
                 return;
@@ -62,69 +60,65 @@ public class AddAccountController {
 
             BankAccount newAccount = null;
 
-            // 3. OBJECT CREATION BASED ON TYPE
+            // 3. OBJECT CREATION BASED ON TYPE (Using Array Indexes)
             switch (selectedType) {
                 case "Checking Account":
-                    TextField overdraftLimitField = activeFields.get("overdraftLimit");
-
+                    // Index 0 is the Overdraft Limit (the first field added)
+                    TextField overdraftLimitField = activeFields.get(0);
                     double overdraft = Double.parseDouble(overdraftLimitField.getText());
-
-                    // Matches constructor: (id, password, name, balance, overdraft)
                     newAccount = new CheckingAccount(password, name, balance, overdraft);
                     break;
 
                 case "Savings Account":
-                    TextField interestRateField = activeFields.get("interestRate");
-
+                    // Index 0 is the Interest Rate (the first field added)
+                    TextField interestRateField = activeFields.get(0);
                     double rate = Double.parseDouble(interestRateField.getText());
-
-                    // Matches constructor: (id, password, name, balance, interestRate)
                     newAccount = new SavingsAccount(password, name, balance, rate);
                     break;
 
                 case "Home Loan":
+                    // Order added: loanAmount (0), remainingAmount (1), propertyAddress (2)
+                    TextField homeLoanAmtField = activeFields.get(0);
+                    TextField homeRemAmtField = activeFields.get(1);
+                    TextField propertyAddressField = activeFields.get(2);
 
-                    TextField loanAmountField = activeFields.get("loanAmount");
-                    TextField remainingAmountField = activeFields.get("remainingAmount");
-                    TextField propertyAddressField = activeFields.get("propertyAddress");
-                    if (propertyAddressField== null || propertyAddressField.getText().isBlank()) {
+                    if (propertyAddressField == null || propertyAddressField.getText().isBlank()) {
                         System.out.println("Error: Please fill in all String fields.");
                         errorLabel.setText("Error: Please fill in all String fields.");
                         return;
                     }
 
-                    double homeAmt = Double.parseDouble(loanAmountField.getText());
-                    double homeRem = Double.parseDouble(remainingAmountField.getText());
+                    double homeAmt = Double.parseDouble(homeLoanAmtField.getText());
+                    double homeRem = Double.parseDouble(homeRemAmtField.getText());
                     String address = propertyAddressField.getText();
-                    if (homeRem>homeAmt){
-                        errorLabel.setText("remaining amount can't be more than loan amount");
-                        System.out.println("remaining amount can't be more than loan amount");
+                    if (homeRem > homeAmt){
+                        errorLabel.setText("Remaining amount can't be more than loan amount");
+                        System.out.println("Remaining amount can't be more than loan amount");
+                        return;
                     }
-                    // Matches constructor: (id, password, name, balance, loanAmt, remainAmt, address)
                     newAccount = new HomeLoan(password, name, balance, homeAmt, homeRem, address);
                     break;
 
                 case "Car Loan":
-                     loanAmountField = activeFields.get("loanAmount");
-                     remainingAmountField = activeFields.get("remainingAmount");
-                    TextField carModelField = activeFields.get("carModel");
-                    if (carModelField== null || carModelField.getText().isBlank()) {
+                    // Order added: loanAmount (0), remainingAmount (1), carModel (2)
+                    TextField carLoanAmtField = activeFields.get(0);
+                    TextField carRemAmtField = activeFields.get(1);
+                    TextField carModelField = activeFields.get(2);
+
+                    if (carModelField == null || carModelField.getText().isBlank()) {
                         System.out.println("Error: Please fill in all String fields.");
                         errorLabel.setText("Error: Please fill in all String fields.");
                         return;
                     }
 
-                    double carAmt = Double.parseDouble(loanAmountField.getText());
-                    double carRem = Double.parseDouble(remainingAmountField.getText());
+                    double carAmt = Double.parseDouble(carLoanAmtField.getText());
+                    double carRem = Double.parseDouble(carRemAmtField.getText());
                     String model = carModelField.getText();
-                    if (carRem>carAmt){
-                        errorLabel.setText("remaining amount can't be more than loan amount");
-                        System.out.println("remaining amount can't be more than loan amount");
+                    if (carRem > carAmt){
+                        errorLabel.setText("Remaining amount can't be more than loan amount");
+                        System.out.println("Remaining amount can't be more than loan amount");
                         return;
                     }
-
-
-                    // Matches constructor: (id, password, name, balance, loanAmt, remainAmt, model)
                     newAccount = new CarLoan( password, name, balance, carAmt, carRem, model);
                     break;
             }
@@ -134,11 +128,10 @@ public class AddAccountController {
                 boolean success = AccountService.createAccount(newAccount);
                 if (success) {
                     System.out.println("Created Account With Name: " + name);
-
                     if (DashboardController.instance != null) {
                         DashboardController.instance.loadAccountData();
                     }
-                    handleCancel(actionEvent); // Closes the popup
+                    handleCancel(actionEvent);
                 } else {
                     System.out.println("Failed to save the account to the database.");
                 }
@@ -151,7 +144,7 @@ public class AddAccountController {
     }
 
     public void handleCancel(ActionEvent actionEvent) {
-        ReportService.closePopup(actionEvent);
+        HelperClass.closePopup(actionEvent);
     }
 
     public void handleTypeChange() {
@@ -165,29 +158,31 @@ public class AddAccountController {
         // 2. Inject fields based on Concrete Classes
         switch (selectedType) {
             case "Checking Account":
-                addField("overdraftLimit", "Overdraft Limit"); //
+                addField("Overdraft Limit");
                 break;
             case "Savings Account":
-                addField("interestRate", "Interest Rate (e.g. 0.05)"); //
+                addField("Interest Rate (e.g. 0.05)");
                 break;
             case "Home Loan":
-                addField("loanAmount", "Total Loan Amount");
-                addField("remainingAmount", "Remaining Balance");
-                addField("propertyAddress", "Property Address"); //
+                addField("Total Loan Amount");
+                addField("Remaining Amount");
+                addField("Property Address");
                 break;
             case "Car Loan":
-                addField("loanAmount", "Total Loan Amount");
-                addField("remainingAmount", "Remaining Balance");
-                addField("carModel", "Car Model"); //
+                addField("Total Loan Amount");
+                addField("Remaining Amount");
+                addField("Car Model");
                 break;
         }
     }
-    private void addField(String id, String prompt) {
+
+    // THE CHANGE: Simplified addField method
+    private void addField(String prompt) {
         TextField tf = new TextField();
         tf.setPromptText(prompt);
         tf.setStyle("-fx-background-radius:8;");
-        AccountService.applySanitizer(errorLabel,tf);
+        HelperClass.applySanitizer(errorLabel, tf);
         dynamicFields.getChildren().add(tf);
-        activeFields.put(id, tf); // Save reference to read later
+        activeFields.add(tf); // Save to the ArrayList
     }
 }

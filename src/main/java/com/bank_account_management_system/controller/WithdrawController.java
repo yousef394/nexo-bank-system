@@ -7,35 +7,31 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class WithdrawController {
     public Label errorLabel;
+    public PasswordField passwordField;
     @FXML private TextField idField;
     @FXML private TextField amountField;
 
     @FXML
     public void initialize() {
         // Feed data to the ComboBox as requested
-        AccountService.applySanitizer(errorLabel, idField, amountField);
+        HelperClass.applySanitizer(errorLabel, idField, amountField);
 
     }
 
-
-    // THE AUTOMATIC PART: Called by ReportService
-    public void initData(BankAccount account) {
-        if (account != null) {
-            idField.setText(String.valueOf(account.getAccountId()));
-        }
-    }
 
     @FXML
     public void handleWithdraw(ActionEvent event) {
         try {
             int id = Integer.parseInt(idField.getText());
+            String password = passwordField.getText();
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount acc = AccountService.find(id);
+            BankAccount acc = AccountService.findByIdAndPassword(id, password);
             if (acc == null){
                 System.out.println("id not found");
                 errorLabel.setText("id not found");
@@ -54,7 +50,7 @@ public class WithdrawController {
                 return;
             }
             // Calls your Checking-specific logic
-            if (AccountService.withdraw(id, amount)) {
+            if (AccountService.withdraw(id, password,amount, HelperClass.getUser().getUsername())) {
                 DashboardController.instance.loadAccountData();
                 handleCancel(event);
             }
@@ -70,4 +66,13 @@ public class WithdrawController {
     public void handleCancel(ActionEvent event) {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
+
+    // THE AUTOMATIC PART: Called by ReportService
+    public void initData(BankAccount account) {
+        if (account != null) {
+            idField.setText(String.valueOf(account.getAccountId()));
+        }
+    }
+
+
 }

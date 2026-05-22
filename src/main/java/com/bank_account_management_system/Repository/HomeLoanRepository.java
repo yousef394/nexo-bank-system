@@ -38,7 +38,7 @@ public class HomeLoanRepository extends BaseRepository<HomeLoan , Integer> {
         return commonFormat(object)
                 + separator+ object.getLoanAmount()
                 + separator+ object.getRemainingAmount()
-                + separator+ sanitize(object.getPropertyAddress());
+                + separator+ (object.getPropertyAddress());
     }
 
     @Override

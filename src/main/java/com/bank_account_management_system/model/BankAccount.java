@@ -40,7 +40,7 @@ public abstract class BankAccount implements Printable, Auditable {
                        double balance, LocalDateTime dateCreated) {
         this.accountId = accountId;
         this.password = password;
-        this.holderName = holderName;
+        setHolderName( holderName);
         this.balance = Math.max(balance, 0);
         this.dateCreated = dateCreated;
     }
@@ -70,6 +70,9 @@ public abstract class BankAccount implements Printable, Auditable {
     // ================= Setters =================
 
     public void setHolderName(String holderName) {
+        if(holderName == null || holderName.isBlank()){
+            throw new IllegalArgumentException("the holder name can't be empty");
+        }
         this.holderName = holderName;
     }
 

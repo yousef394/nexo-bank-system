@@ -1,16 +1,19 @@
 package com.bank_account_management_system.controller;
 
 import com.bank_account_management_system.model.BankAccount;
+import com.bank_account_management_system.model.CheckingAccount;
 import com.bank_account_management_system.service.AccountService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class TransferController {
 
+    @FXML public PasswordField passwordField;
     @FXML private TextField fromAccountId;
     @FXML private TextField toAccountId;
     @FXML private TextField amountField;
@@ -20,26 +23,40 @@ public class TransferController {
     @FXML
     public void initialize() {
         // Feed data to the ComboBox as requested
-        AccountService.applySanitizer(errorLabel, fromAccountId, toAccountId, amountField);
+        HelperClass.applySanitizer(errorLabel, fromAccountId, toAccountId, amountField);
 
     }
     @FXML
     public void handleTransfer(ActionEvent event) {
         try {
             int fromId = Integer.parseInt(fromAccountId.getText());
+            String password = passwordField.getText();
             int toId = Integer.parseInt(toAccountId.getText());
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount fromAcc = AccountService.find(toId);
+            BankAccount fromAcc = AccountService.findByIdAndPassword(fromId, password);
             if (fromAcc == null){
                 System.out.println("toId not found");
                 errorLabel.setText("toId not found");
                 return;
             }
-            BankAccount toAcc = AccountService.find(fromId);
-            if (toAcc == null){
-                System.out.println("fromId not found");
-                errorLabel.setText("fromId not found");
+            if (!(fromAcc instanceof CheckingAccount)){
+                System.out.println("can't withdraw from a non-checking account");
+                errorLabel.setText("can't withdraw from a non-checking account");
                 return;
+
+            }
+
+            BankAccount toAcc = AccountService.findById(toId);
+            if (toAcc == null){
+                System.out.println("toId not found");
+                errorLabel.setText("toId not found");
+                return;
+            }
+            if (toAcc == fromAcc){
+                System.out.println("can't transfer into and from the same account");
+                errorLabel.setText("can't transfer into and from the same account");
+                return;
+
             }
             if(amount <.01){
                 System.out.println("can't transfer less than .01");
@@ -47,7 +64,7 @@ public class TransferController {
                 return;
             }
             // Call the transfer method in AccountService
-            boolean success = AccountService.transfer(fromId, toId, amount);
+            boolean success = AccountService.transfer(fromId, password,toId, amount, HelperClass.getUser().getUsername());
 
             if (success) {
                 System.out.println("Transfer Successful!");

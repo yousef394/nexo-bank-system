@@ -1,7 +1,6 @@
 package com.bank_account_management_system.controller;
 import com.bank_account_management_system.model.*;
 import com.bank_account_management_system.service.AccountService;
-import com.bank_account_management_system.service.ReportService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,17 +12,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.bank_account_management_system.service.ReportService.*;
-
 public class DashboardController {
     public static DashboardController instance;
 
     @FXML private Label totalAccountsLabel;
     @FXML private Label totalBalanceLabel;
     @FXML private Label loanCountLabel;
-
+    @FXML private Label welcomeLabel;
     public void handleLogout(ActionEvent event) throws IOException {
-        changeScene("login.fxml", event);
+        HelperClass.changeScene("login.fxml", event);
     }
 
     public void handleDeposit() throws IOException {
@@ -31,20 +28,20 @@ public class DashboardController {
         BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
 
         // Pass it to the service
-        ReportService.openActionPopup("deposit.fxml", selected);
+        HelperClass.openActionPopup("deposit.fxml", selected);
     }
 
     public void handleWithdraw() throws IOException {
         BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
-        ReportService.openActionPopup("withdraw.fxml", selected);
+        HelperClass.openActionPopup("withdraw.fxml", selected);
     }
 
     public void handleTransfer() throws  IOException {
-        openPopup("transfer.fxml");
+        HelperClass.openPopup("transfer.fxml");
     }
 
     public void handleAddAccount()throws  IOException  {
-        openPopup("Add_Account_Screen.fxml");
+        HelperClass.openPopup("Add_Account_Screen.fxml");
     }
 
     public void handleDeleteAccount() {
@@ -80,6 +77,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
         instance = this;
+        welcomeLabel.setText("Hello, " + HelperClass.getUser().getUsername());
         loadAccountData();
         // 1. Link columns to BankAccount properties
         // These strings MUST match the getter names (e.g., "accountId" matches "getAccountId()")
@@ -95,6 +93,10 @@ public class DashboardController {
         });
         // 2. Load the data
         loadAccountData();
+    }
+    public void handleReports(ActionEvent event) throws IOException {
+        // Use the existing utility method in ReportService to swap views
+        HelperClass.changeScene("Reports.fxml", event);
     }
 
     public void loadAccountData() {
@@ -125,9 +127,5 @@ public class DashboardController {
 
     }
 
-    public void handleReports(ActionEvent event) throws IOException {
-        // Use the existing utility method in ReportService to swap views
-        ReportService.changeScene("reports.fxml", event);
-    }
 }
 

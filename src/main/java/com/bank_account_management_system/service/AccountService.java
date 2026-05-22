@@ -3,8 +3,6 @@ package com.bank_account_management_system.service;
 
 import com.bank_account_management_system.Repository.*;
 import com.bank_account_management_system.model.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ public class AccountService {
     private static final CarLoanRepository carLoanRepo = new CarLoanRepository();
     private static final HomeLoanRepository homeLoanRepo = new HomeLoanRepository();
     private static final TransactionRepository transactionRepo = new TransactionRepository();
-
     public static boolean createAccount(BankAccount account) {
         if (account == null) { return false; }
 
@@ -147,7 +144,7 @@ public class AccountService {
 
     }
 
-    public static boolean deposit(int id,String password, Double amount ,String userName) {
+    public static boolean deposit(int id,String password, Double amount, String userName) {
         BankAccount account = findByIdAndPassword(id,password);
 
         if (account == null || amount == null || amount <= 0 || userName == null || userName.isEmpty())
@@ -162,8 +159,8 @@ public class AccountService {
 
     }
 
-    public static boolean withdraw(int id,String password, Double amount ,String userName) {
-       BankAccount account = findByIdAndPassword(id,password);
+    public static boolean withdraw(int id,String password, Double amount, String userName) {
+        BankAccount account = findByIdAndPassword(id,password);
 
         if (account == null || amount == null || amount <= 0 ||userName == null || userName.isEmpty() )
             return false;
@@ -176,7 +173,7 @@ public class AccountService {
                 amount,balance,balance-amount ,userName) );
     }
 
-    public static boolean transfer(int idFrom,String password , int idTo, double amount , String userName ) {
+    public static boolean transfer(int idFrom,String password , int idTo, double amount, String userName) {
             BankAccount account1 = findByIdAndPassword(idFrom,password);
             BankAccount account2 = findById(idTo);
 
@@ -197,15 +194,5 @@ public class AccountService {
                 transactionRepo.add(new Transaction( account2.getAccountId(),TransactionType.TRANSFER,
                 amount,balance2,balance2+amount ,userName));
 
-    }
-    public static void applySanitizer(Label errorLabel,TextField... fields) {
-        for (TextField field : fields) {
-            field.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null && newValue.contains("#//#")) {
-                    field.setText(oldValue); // Revert to what it was before the illegal char
-                    errorLabel.setText("The sequence '#//#' is reserved for system use.");
-                }
-            });
-        }
     }
 }

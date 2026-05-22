@@ -1,12 +1,16 @@
 package com.bank_account_management_system.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 
-import static com.bank_account_management_system.service.ReportService.*;
+import java.io.IOException;
+
+import static com.bank_account_management_system.controller.HelperClass.showBarChart;
+import static com.bank_account_management_system.controller.HelperClass.showPieChart;
 
 public class ReportsController {
     @FXML private BarChart<String, Number> reportBarChart;
@@ -39,5 +43,9 @@ public class ReportsController {
         } else if (selected.equals("Pie Chart: Distribution")) {
             showPieChart(reportBarChart, reportPieChart, reportArea);
         }
+    }
+
+    public void handleReturn(ActionEvent actionEvent) throws IOException {
+        HelperClass.changeScene("dashboard.fxml", actionEvent);
     }
 }
