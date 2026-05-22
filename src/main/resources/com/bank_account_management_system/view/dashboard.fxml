@@ -67,7 +67,7 @@
         <VBox spacing="28">
 
             <padding>
-                <Insets bottom="28" left="30" right="30" top="28" />
+                <Insets bottom="15" left="20" right="20" top="15" />
             </padding>
 
             <!-- WELCOME -->
@@ -160,10 +160,10 @@
 
             <!-- ================= TABLE SECTION ================= -->
 
-            <VBox  spacing="16" style="-fx-background-color: rgba(13,47,102,0.88);                          -fx-background-radius:24;                          -fx-border-radius:24;                          -fx-border-color: rgba(255,255,255,0.05);                          -fx-border-width:1;                          -fx-effect:dropshadow(gaussian, rgba(0,0,0,0.30), 20, 0, 0, 6);">
+            <VBox spacing="12" VBox.vgrow="ALWAYS" style="-fx-background-color: rgba(13,47,102,0.88); -fx-background-radius:24; -fx-border-radius:24; -fx-border-color: rgba(255,255,255,0.05); -fx-border-width:1; -fx-effect:dropshadow(gaussian, rgba(0,0,0,0.30), 20, 0, 0, 6);">
 
                 <padding>
-                    <Insets bottom="22" left="22" right="22" top="22" />
+                    <Insets bottom="15" left="15" right="15" top="15" />
                 </padding>
 
                 <HBox alignment="CENTER_LEFT">
@@ -184,7 +184,7 @@
 
                 <!-- TABLE -->
 
-                <TableView fx:id="accountsTable" prefHeight="360" style="-fx-background-color: transparent; -fx-control-inner-background: #102B59; -fx-table-cell-border-color: rgba(255,255,255,0.03); -fx-selection-bar: #2563EB; -fx-selection-bar-text: white; -fx-font-size: 16; -fx-background-radius: 18;">
+                <TableView fx:id="accountsTable" VBox.vgrow="ALWAYS" prefHeight="360" style="-fx-background-color: transparent; -fx-control-inner-background: #102B59; -fx-table-cell-border-color: rgba(255,255,255,0.03); -fx-selection-bar: #2563EB; -fx-selection-bar-text: white; -fx-font-size: 16; -fx-background-radius: 18;">
 
                     <columns>
 

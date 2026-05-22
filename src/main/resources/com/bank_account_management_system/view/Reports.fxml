@@ -35,16 +35,16 @@
     <!-- MAIN CONTENT -->
     <center>
 
-        <VBox alignment="TOP_CENTER" spacing="30">
+        <VBox alignment="TOP_CENTER" spacing="15">
 
             <padding>
-                <Insets bottom="35" left="35" right="35" top="35" />
+                <Insets bottom="15" left="15" right="15" top="15" />
             </padding>
 
             <!-- GENERATE CARD -->
-            <VBox alignment="CENTER" maxWidth="420" spacing="18" style="                     -fx-background-color:#112D5C;                     -fx-background-radius:20;                     -fx-padding:35;                     -fx-effect:dropshadow(gaussian, rgba(0,0,0,0.35), 20,0,0,8);                   ">
+            <VBox alignment="CENTER" maxWidth="420" spacing="12" style="-fx-background-color:#112D5C; -fx-background-radius:20; -fx-padding:20; -fx-effect:dropshadow(gaussian, rgba(0,0,0,0.35), 20,0,0,8);">
 
-                <Label style="                         -fx-text-fill:white;                         -fx-font-size:24;                         -fx-font-weight:bold;                        " text="Generate Report" />
+                <Label style="-fx-text-fill:white;-fx-font-size:24;-fx-font-weight:bold;" text="Generate Report" />
 
                 <ComboBox fx:id="reportTypeBox" prefHeight="40" prefWidth="280" promptText="Select Report Type" style="                             -fx-background-radius:10;                             -fx-font-size:14;                           " />
 
@@ -53,9 +53,8 @@
             </VBox>
 
             <!-- OUTPUT CARD -->
-            <VBox spacing="20" style="                     -fx-background-color:#112D5C;                     -fx-background-radius:20;                     -fx-padding:30;                     -fx-effect:dropshadow(gaussian, rgba(0,0,0,0.35), 20,0,0,8);                   " VBox.vgrow="ALWAYS">
-
-                <Label style="                         -fx-text-fill:white;                         -fx-font-size:24;                         -fx-font-weight:bold;                        " text="Report Analytics" />
+            <VBox spacing="15" style="-fx-background-color:#112D5C; -fx-background-radius:20; -fx-padding:15; -fx-effect:dropshadow(gaussian, rgba(0,0,0,0.35), 20,0,0,8);" VBox.vgrow="ALWAYS">
+                <Label style="-fx-text-fill:white;-fx-font-size:24;-fx-font-weight:bold;" text="Report Analytics" />
 
                 <!-- CHART -->
                 <BarChart fx:id="reportBarChart" animated="false" legendVisible="false" prefHeight="350" style="                             -fx-background-color:transparent;                             -fx-text-fill:white;                           " title="Transactions per Account">
