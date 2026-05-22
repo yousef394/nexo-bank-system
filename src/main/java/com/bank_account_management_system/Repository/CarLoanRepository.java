@@ -7,7 +7,7 @@ public class CarLoanRepository extends BaseRepository<CarLoan , Integer> {
 
     public CarLoanRepository() {
         //file path
-        super("src/main/resources/Files/carLoan.txt");
+        super("Nexo Bank/Files/carLoan.txt");
 
     }
 

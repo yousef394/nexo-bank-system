@@ -31,7 +31,7 @@ public abstract class BankAccount implements Printable, Auditable {
 
         this.password = password;
         this.holderName = holderName;
-        this.balance = Math.max(balance, 0);
+        this.balance = balance;
         this.dateCreated = LocalDateTime.now();
     }
 
@@ -41,7 +41,7 @@ public abstract class BankAccount implements Printable, Auditable {
         this.accountId = accountId;
         this.password = password;
         setHolderName( holderName);
-        this.balance = Math.max(balance, 0);
+        this.balance = balance;
         this.dateCreated = dateCreated;
     }
 

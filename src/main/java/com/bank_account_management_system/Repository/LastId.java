@@ -3,7 +3,7 @@ package com.bank_account_management_system.Repository;
 import java.io.*;
 
 public class LastId {
-    private static final String fileName = "src/main/resources/Files/lastId.txt";
+    private static final String fileName = "Files/lastId.txt";
 
     public static boolean addLastId(int id) {
 

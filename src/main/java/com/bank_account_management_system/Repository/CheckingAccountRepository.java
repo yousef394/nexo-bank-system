@@ -7,7 +7,7 @@ public  class CheckingAccountRepository extends BaseRepository<CheckingAccount ,
 
     public CheckingAccountRepository() {
         //file path
-        super("src/main/resources/Files/checkingAccount.txt");
+        super("Files/checkingAccount.txt");
 
     }
 

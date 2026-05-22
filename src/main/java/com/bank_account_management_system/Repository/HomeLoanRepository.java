@@ -9,7 +9,7 @@ public class HomeLoanRepository extends BaseRepository<HomeLoan , Integer> {
 
     public HomeLoanRepository() {
         //file path
-        super("src/main/resources/Files/homeLoan.txt");
+        super("Files/homeLoan.txt");
 
     }
 

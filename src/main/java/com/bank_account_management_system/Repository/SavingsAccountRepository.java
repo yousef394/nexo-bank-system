@@ -8,7 +8,7 @@ public class SavingsAccountRepository extends BaseRepository<SavingsAccount , In
 
     public SavingsAccountRepository() {
         //file path
-        super("src/main/resources/Files/savingsAccount.txt");
+        super("Files/savingsAccount.txt");
 
     }
 

@@ -2,14 +2,12 @@ package com.bank_account_management_system.Repository;
 
 import com.bank_account_management_system.model.User;
 
-import java.util.ArrayList;
-
 public class UserRepository extends BaseRepository<User ,String> implements CRUD<User , String> {
 
     //========== Constructor for file path ========
 
     public UserRepository() {
-        super("src/main/resources/Files/User.txt");
+        super("Files/User.txt");
     }
 
 
