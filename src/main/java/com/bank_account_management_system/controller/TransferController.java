@@ -30,13 +30,13 @@ public class TransferController {
     public void handleTransfer(ActionEvent event) {
         try {
             int fromId = Integer.parseInt(fromAccountId.getText());
-            String password = passwordField.getText();
+            String password = passwordField.getText().trim();
             int toId = Integer.parseInt(toAccountId.getText());
             double amount = Double.parseDouble(amountField.getText());
             BankAccount fromAcc = AccountService.findByIdAndPassword(fromId, password);
             if (fromAcc == null){
-                System.out.println("toId not found");
-                errorLabel.setText("toId not found");
+                System.out.println("Invalid fromId or Password!");
+                errorLabel.setText("Invalid fromId or Password!");
                 return;
             }
             if (!(fromAcc instanceof CheckingAccount)){

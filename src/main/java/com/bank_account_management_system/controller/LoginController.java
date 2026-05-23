@@ -25,8 +25,8 @@ public class LoginController {
     }
     @FXML
     public void handleLogin(ActionEvent event) throws IOException {
-        String name = usernameField.getText();
-        String pass = passwordField.getText();
+        String name = usernameField.getText().trim();
+        String pass = passwordField.getText().trim();
         UserRepository repo = new UserRepository();
         // Call the service
         User userAccount = UserService.findByUserNameAndPassword(name, pass);

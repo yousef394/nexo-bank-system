@@ -25,7 +25,6 @@ public class AddAccountController {
     @FXML
     private VBox dynamicFields;
 
-    // THE CHANGE: Use a simple ArrayList instead of a HashMap
     private ArrayList<TextField> activeFields = new ArrayList<>();
 
     @FXML
@@ -53,8 +52,8 @@ public class AddAccountController {
             }
 
             // 2. EXTRACT SHARED DATA
-            String name = nameField.getText();
-            String password = passwordField.getText();
+            String name = nameField.getText().trim();
+            String password = passwordField.getText().trim();
             double balance = Double.parseDouble(balanceField.getText());
             String selectedType = accountTypeBox.getValue();
 
@@ -64,14 +63,14 @@ public class AddAccountController {
             switch (selectedType) {
                 case "Checking Account":
                     // Index 0 is the Overdraft Limit (the first field added)
-                    TextField overdraftLimitField = activeFields.get(0);
+                    TextField overdraftLimitField = activeFields.getFirst();
                     double overdraft = Double.parseDouble(overdraftLimitField.getText());
                     newAccount = new CheckingAccount(password, name, balance, overdraft);
                     break;
 
                 case "Savings Account":
                     // Index 0 is the Interest Rate (the first field added)
-                    TextField interestRateField = activeFields.get(0);
+                    TextField interestRateField = activeFields.getFirst();
                     double rate = Double.parseDouble(interestRateField.getText());
                     newAccount = new SavingsAccount(password, name, balance, rate);
                     break;
@@ -90,7 +89,7 @@ public class AddAccountController {
 
                     double homeAmt = Double.parseDouble(homeLoanAmtField.getText());
                     double homeRem = Double.parseDouble(homeRemAmtField.getText());
-                    String address = propertyAddressField.getText();
+                    String address = propertyAddressField.getText().trim();
                     if (homeRem > homeAmt){
                         errorLabel.setText("Remaining amount can't be more than loan amount");
                         System.out.println("Remaining amount can't be more than loan amount");
@@ -113,7 +112,7 @@ public class AddAccountController {
 
                     double carAmt = Double.parseDouble(carLoanAmtField.getText());
                     double carRem = Double.parseDouble(carRemAmtField.getText());
-                    String model = carModelField.getText();
+                    String model = carModelField.getText().trim();
                     if (carRem > carAmt){
                         errorLabel.setText("Remaining amount can't be more than loan amount");
                         System.out.println("Remaining amount can't be more than loan amount");
@@ -176,7 +175,6 @@ public class AddAccountController {
         }
     }
 
-    // THE CHANGE: Simplified addField method
     private void addField(String prompt) {
         TextField tf = new TextField();
         tf.setPromptText(prompt);

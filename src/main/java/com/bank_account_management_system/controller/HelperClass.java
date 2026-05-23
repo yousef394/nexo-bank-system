@@ -19,7 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import com.bank_account_management_system.Repository.*;
+
 import java.util.ArrayList;
 
 import java.io.IOException;
@@ -27,10 +27,10 @@ import java.io.IOException;
 public class HelperClass {
     private final static UserRepository userRepo = new UserRepository();
     private static User user;
-    public static void setUser(User u){
+    protected static void setUser(User u){
         user = u;
     }
-    public static User getUser(){
+    protected static User getUser(){
         return user;
     }
     public static void applySanitizer(Label errorLabel, TextField... fields) {
@@ -57,12 +57,12 @@ public class HelperClass {
     }
 
     @FXML
-    static public void openPopup(String toPage) throws IOException {
+    static public void openPopup(String toPage, String pageTitle) throws IOException {
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("/com/bank_account_management_system/view/"+toPage));
         Parent root = loader.load();
 
         Stage popupStage = new Stage();
-        popupStage.setTitle("Open New Account");
+        popupStage.setTitle(pageTitle);
 
         // Make it 'Modal' (blocks the main window)
         popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -71,8 +71,8 @@ public class HelperClass {
         popupStage.show();
     }
 
-    public static void openActionPopup(String fxmlPath, BankAccount selectedAccount) throws IOException {
-        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("/com/bank_account_management_system/view/" + fxmlPath));
+    public static void openActionPopup(String toPage, String pageTitle,BankAccount selectedAccount) throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("/com/bank_account_management_system/view/" + toPage));
         Parent root = loader.load();
 
         // Get the controller of the window we just loaded
@@ -85,10 +85,12 @@ public class HelperClass {
             ((WithdrawController) controller).initData(selectedAccount);
         }
 
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
+        Stage popupStage = new Stage();
+        popupStage.setTitle(pageTitle);
+
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setScene(new Scene(root));
+        popupStage.showAndWait();
     }
 
 
@@ -126,14 +128,12 @@ public class HelperClass {
         // 3. Get all transactions from the physical file
         ArrayList<Transaction> allTransactions = transactionRepo.getAll();
 
-        // THE CHANGE: The Non-Map Counting Logic
         // We use two parallel lists to keep track of counts
         ArrayList<Integer> uniqueAccountIds = new ArrayList<>();
         ArrayList<Integer> transactionCounts = new ArrayList<>();
 
         for (Transaction t : allTransactions) {
             int accId = t.getAccountId();
-
             // Check if we have seen this Account ID before
             boolean found = false;
             for (int i = 0; i < uniqueAccountIds.size(); i++) {

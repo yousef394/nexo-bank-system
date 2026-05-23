@@ -15,7 +15,7 @@ public class MainApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/com/bank_account_management_system/view/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         this.stage=stage;
-        stage.setTitle("Hello!");
+        stage.setTitle("Nexo Bank Management System");
         stage.setScene(scene);
         stage.show();
     }

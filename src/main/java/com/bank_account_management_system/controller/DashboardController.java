@@ -19,55 +19,6 @@ public class DashboardController {
     @FXML private Label totalBalanceLabel;
     @FXML private Label loanCountLabel;
     @FXML private Label welcomeLabel;
-    public void handleLogout(ActionEvent event) throws IOException {
-        HelperClass.changeScene("login.fxml", event);
-    }
-
-    public void handleDeposit() throws IOException {
-        // Grab whatever row the user clicked on
-        BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
-
-        // Pass it to the service
-        HelperClass.openActionPopup("deposit.fxml", selected);
-    }
-
-    public void handleWithdraw() throws IOException {
-        BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
-        HelperClass.openActionPopup("withdraw.fxml", selected);
-    }
-
-    public void handleTransfer() throws  IOException {
-        HelperClass.openPopup("transfer.fxml");
-    }
-
-    public void handleAddAccount()throws  IOException  {
-        HelperClass.openPopup("Add_Account_Screen.fxml");
-    }
-
-    public void handleDeleteAccount() {
-        // 1. Get the selected account from the TableView
-        BankAccount selectedAccount = accountsTable.getSelectionModel().getSelectedItem();
-
-        if (selectedAccount == null) {
-            System.out.println("Please select an account from the table first.");
-            return;
-        }
-
-        // 2. Identify the AccountType (needed for the service switch)
-
-
-
-        // 3. Call the service to remove it from the text files
-        boolean success = AccountService.delete(selectedAccount.getAccountId());
-
-        if (success) {
-            System.out.println("Account deleted successfully.");
-            // 4. Refresh the UI using the same logic as Add/Transfer
-            loadAccountData();
-        } else {
-            System.out.println("Error: Could not delete the account.");
-        }
-    }
     @FXML private TableView<BankAccount> accountsTable;
     @FXML private TableColumn<BankAccount, Integer> idColumn;
     @FXML private TableColumn<BankAccount, String> nameColumn;
@@ -77,8 +28,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
         instance = this;
-        welcomeLabel.setText("Hello, " + HelperClass.getUser().getUsername());
-        loadAccountData();
+        welcomeLabel.setText("Hello, " + HelperClass.getUser().getName());
         // 1. Link columns to BankAccount properties
         // These strings MUST match the getter names (e.g., "accountId" matches "getAccountId()")
         idColumn.setCellValueFactory(new PropertyValueFactory<>("accountId"));
@@ -99,8 +49,53 @@ public class DashboardController {
         HelperClass.changeScene("Reports.fxml", event);
     }
 
+
+    public void handleLogout(ActionEvent event) throws IOException {
+        HelperClass.changeScene("login.fxml", event);
+    }
+
+    public void handleDeposit() throws IOException {
+        // Grab whatever row the user clicked on
+        BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
+
+        // Pass it to the service
+        HelperClass.openActionPopup("deposit.fxml", "Make A New Deposit",selected);
+    }
+
+    public void handleWithdraw() throws IOException {
+        BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
+        HelperClass.openActionPopup("withdraw.fxml", "Make A New Withdraw",selected);
+    }
+
+    public void handleTransfer() throws  IOException {
+        HelperClass.openPopup("transfer.fxml","Make A New Transfer");
+    }
+
+    public void handleAddAccount()throws  IOException  {
+        HelperClass.openPopup("Add_Account_Screen.fxml", "Create A New Account");
+    }
+
+    public void handleDeleteAccount() {
+        // 1. Get the selected account from the TableView
+        BankAccount selectedAccount = accountsTable.getSelectionModel().getSelectedItem();
+
+        if (selectedAccount == null) {
+            System.out.println("Please select an account from the table first.");
+            return;
+        }
+        // 2. Call the service to remove it from the text files
+        boolean success = AccountService.delete(selectedAccount.getAccountId());
+
+        if (success) {
+            System.out.println("Account deleted successfully.");
+            // 4. Refresh the UI using the same logic as Add/Transfer
+            loadAccountData();
+        } else {
+            System.out.println("Error: Could not delete the account.");
+        }
+    }
     public void loadAccountData() {
-// 1. Get the fresh list from the files
+        // 1. Get the fresh list from the files
         ArrayList<BankAccount> allAccounts = AccountService.loadAccounts();
 
         // 2. Update the Table

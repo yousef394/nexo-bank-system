@@ -28,12 +28,12 @@ public class DepositController {
     public void handleDeposit(ActionEvent event) {
         try {
             int id = Integer.parseInt(idField.getText());
-            String password = passwordField.getText();
+            String password = passwordField.getText().trim();
             double amount = Double.parseDouble(amountField.getText());
             BankAccount acc = AccountService.findByIdAndPassword(id, password);
             if (acc == null){
-                System.out.println("id not found");
-                errorLabel.setText("id not found");
+                System.out.println("Invalid Id or Password!");
+                errorLabel.setText("Invalid Id or Password!");
                 return;
             }
             if(amount <.01){
