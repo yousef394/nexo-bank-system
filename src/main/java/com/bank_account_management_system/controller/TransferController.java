@@ -30,37 +30,36 @@ public class TransferController {
     public void handleTransfer(ActionEvent event) {
         try {
             int fromId = Integer.parseInt(fromAccountId.getText());
+            if (!Validation.isTextFieldValid(passwordField)){
+                Error.print(errorLabel,"Error: Please fill in the password.");
+                return;
+            }
             String password = passwordField.getText().trim();
             int toId = Integer.parseInt(toAccountId.getText());
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount fromAcc = AccountService.findByIdAndPassword(fromId, password);
-            if (fromAcc == null){
-                System.out.println("Invalid fromId or Password!");
-                errorLabel.setText("Invalid fromId or Password!");
+            BankAccount fromAccount = AccountService.findByIdAndPassword(fromId, password);
+            if (!Validation.isAccountFound(fromAccount)){
+                Error.print(errorLabel,"Invalid fromId or Password!");
                 return;
             }
-            if (!(fromAcc instanceof CheckingAccount)){
-                System.out.println("can't withdraw from a non-checking account");
-                errorLabel.setText("can't withdraw from a non-checking account");
+            if (!(fromAccount instanceof CheckingAccount)){
+                Error.print(errorLabel,"can't withdraw from a non-checking account");
                 return;
 
             }
 
-            BankAccount toAcc = AccountService.findById(toId);
-            if (toAcc == null){
-                System.out.println("toId not found");
-                errorLabel.setText("toId not found");
+            BankAccount toAccount = AccountService.findById(toId);
+            if (!Validation.isAccountFound(toAccount)){
+                Error.print(errorLabel,"toId not found");
                 return;
             }
-            if (toAcc == fromAcc){
-                System.out.println("can't transfer into and from the same account");
-                errorLabel.setText("can't transfer into and from the same account");
+            if (toAccount == fromAccount){
+                Error.print(errorLabel,"can't transfer into and from the same account");
                 return;
 
             }
-            if(amount <.01){
-                System.out.println("can't transfer less than .01");
-                errorLabel.setText("can't transfer less than .01");
+            if(Validation.isAmountValid(amount)){
+                Error.print(errorLabel,"can't transfer less than .01");
                 return;
             }
             // Call the transfer method in AccountService
@@ -76,15 +75,13 @@ public class TransferController {
 
                 handleCancel(event); // Close the popup
             } else {
-                System.out.println("Transfer Failed: Check balance or IDs.");
-                errorLabel.setText("Transfer Failed: Check balance or IDs.");
+                Error.print(errorLabel,"Transfer Failed: Check balance or IDs.");
 
             }
 
         }
         catch (NumberFormatException e) {
-            System.out.println("Error: Please enter valid numbers for IDs, Amount.");
-            errorLabel.setText("Error: Please enter valid numbers for IDs, Amount.");
+            Error.print(errorLabel,"Error: Please enter valid numbers for IDs, Amount.");
         }
     }
 

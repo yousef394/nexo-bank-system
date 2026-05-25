@@ -94,19 +94,19 @@ public class Report {
 
 // 1. Get actual counts from all account repositories
         int checking = checkingRepo.getAll().size();
-        int savings = savingsRepo.getAll().size();
-        int loans = carLoanRepo.getAll().size() + homeLoanRepo.getAll().size();
+        int savings =  savingsRepo.getAll().size();
+        int loans =    carLoanRepo.getAll().size() + homeLoanRepo.getAll().size();
 
         // 2. Add to PieChart
         if (checking > 0) reportPieChart.getData().add(new PieChart.Data("Checking", checking));
-        if (savings > 0) reportPieChart.getData().add(new PieChart.Data("Savings", savings));
-        if (loans > 0) reportPieChart.getData().add(new PieChart.Data("Loans", loans));
+        if (savings > 0)  reportPieChart.getData().add(new PieChart.Data("Savings", savings));
+        if (loans > 0)    reportPieChart.getData().add(new PieChart.Data("Loans", loans));
 
         // 3. Update the report text area with totals
         reportArea.setText("--- Account Distribution Report ---\n" +
-                "Checking Accounts: " + checking + "\n" +
-                "Savings Accounts: " + savings + "\n" +
-                "Loan Accounts: " + loans + "\n" +
+                "Checking Accounts: "      + checking + "\n" +
+                "Savings Accounts: "       + savings + "\n" +
+                "Loan Accounts: "          + loans + "\n" +
                 "Total Accounts Managed: " + (checking + savings + loans));
     }
 

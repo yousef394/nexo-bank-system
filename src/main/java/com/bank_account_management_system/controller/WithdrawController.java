@@ -11,6 +11,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import static com.bank_account_management_system.controller.Validation.isTextFieldValid;
+
 public class WithdrawController {
     public Label errorLabel;
     public PasswordField passwordField;
@@ -30,23 +32,25 @@ public class WithdrawController {
         try {
             int id = Integer.parseInt(idField.getText());
             String password = passwordField.getText().trim();
+            if (isTextFieldValid(passwordField)) {
+                Error.print(errorLabel,"Error: Please fill in the password.");
+                return;
+            }
+
             double amount = Double.parseDouble(amountField.getText());
-            BankAccount acc = AccountService.findByIdAndPassword(id, password);
-            if (acc == null){
-                System.out.println("Invalid Id or Password!");
-                errorLabel.setText("Invalid Id or Password!");
+            BankAccount account = AccountService.findByIdAndPassword(id, password);
+            if (!Validation.isAccountFound(account)){
+                Error.print(errorLabel,"Invalid Id or Password!");
                 return;
             }
-            if (!(acc instanceof CheckingAccount)){
-                System.out.println("can't withdraw from a non-checking account");
-                errorLabel.setText("can't withdraw from a non-checking account");
+            if (!(account instanceof CheckingAccount)){
+                Error.print(errorLabel,"can't withdraw from a non-checking account");
                 return;
 
             }
 
-            if(amount <.01){
-                System.out.println("can't withdraw less than .01");
-                errorLabel.setText("can't withdraw less than .01");
+            if(Validation.isAmountValid(amount)){
+                Error.print(errorLabel,"can't withdraw less than .01");
                 return;
             }
             // Calls your Checking-specific logic
@@ -57,8 +61,7 @@ public class WithdrawController {
 
         }
         catch (NumberFormatException e) {
-            System.out.println("Error: Please check numerical inputs.");
-            errorLabel.setText("Error: Please check numerical inputs.");
+            Error.print(errorLabel,"Error: Please check numerical inputs.");
         }
     }
 

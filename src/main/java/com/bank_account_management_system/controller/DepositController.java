@@ -10,6 +10,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import static com.bank_account_management_system.controller.Validation.isTextFieldValid;
+
 
 public class DepositController {
     public Label errorLabel;
@@ -29,16 +31,19 @@ public class DepositController {
         try {
             int id = Integer.parseInt(idField.getText());
             String password = passwordField.getText().trim();
-            double amount = Double.parseDouble(amountField.getText());
-            BankAccount acc = AccountService.findByIdAndPassword(id, password);
-            if (acc == null){
-                System.out.println("Invalid Id or Password!");
-                errorLabel.setText("Invalid Id or Password!");
+            if (isTextFieldValid(passwordField)) {
+                Error.print(errorLabel,"Error: Please fill in the password.");
                 return;
             }
-            if(amount <.01){
-                System.out.println("can't deposit less than .01");
-                errorLabel.setText("can't deposit less than .01");
+
+            double amount = Double.parseDouble(amountField.getText());
+            BankAccount account = AccountService.findByIdAndPassword(id, password);
+            if (!Validation.isAccountFound(account)){
+                Error.print(errorLabel,"Invalid Id or Password!");
+                return;
+            }
+            if(Validation.isAmountValid(amount)){
+                Error.print(errorLabel,"can't deposit less than .01");
                 return;
             }
             boolean success = AccountService.deposit(id,password, amount, Cache.getUser().getUsername());
@@ -50,8 +55,7 @@ public class DepositController {
 
         }
         catch (NumberFormatException e) {
-            System.out.println("Error: Please enter valid numbers for IDs, Amount... etc");
-            errorLabel.setText("Error: Please enter valid numbers for IDs, Amount... etc");
+            Error.print(errorLabel,"Error: Please enter valid numbers for IDs, Amount... etc");
         }
     }
 

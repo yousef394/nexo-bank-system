@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
+import static com.bank_account_management_system.controller.Validation.isTextFieldValid;
+
 public class LoginController {
     @FXML
     private TextField usernameField;
@@ -27,6 +29,11 @@ public class LoginController {
     public void handleLogin(ActionEvent event) throws IOException {
         String name = usernameField.getText().trim();
         String pass = passwordField.getText().trim();
+        if ( isTextFieldValid(usernameField)||isTextFieldValid(passwordField)) {
+            Error.print(errorLabel,"Error: Please fill in all String fields.");
+            return;
+        }
+
         UserRepository repo = new UserRepository();
         // Call the service
         User userAccount = UserService.findByUserNameAndPassword(name, pass);

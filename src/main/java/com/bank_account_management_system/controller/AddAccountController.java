@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
+import static com.bank_account_management_system.controller.Validation.isTextFieldValid;
+
 public class AddAccountController {
     @FXML
     private TextField nameField;
@@ -38,16 +40,12 @@ public class AddAccountController {
         try {
             // 1. DATA VALIDATION
             if(accountTypeBox.getValue() == null){
-                System.out.println("Error: Please choose the account type.");
-                errorLabel.setText("Error: Please choose the account type.");
+                Error.print(errorLabel,"Error: Please choose the account type.");
                 return;
 
             }
-            if ( nameField== null ||
-                    nameField.getText().isBlank()||passwordField== null ||
-                    passwordField.getText().isBlank()  ) {
-                System.out.println("Error: Please fill in all String fields.");
-                errorLabel.setText("Error: Please fill in all String fields.");
+            if ( isTextFieldValid(nameField)||isTextFieldValid(passwordField)) {
+                Error.print(errorLabel, "Error: Please fill in all String fields.");
                 return;
             }
 
@@ -81,9 +79,8 @@ public class AddAccountController {
                     TextField homeRemAmtField = activeFields.get(1);
                     TextField propertyAddressField = activeFields.get(2);
 
-                    if (propertyAddressField == null || propertyAddressField.getText().isBlank()) {
-                        System.out.println("Error: Please fill in all String fields.");
-                        errorLabel.setText("Error: Please fill in all String fields.");
+                    if (isTextFieldValid(propertyAddressField)) {
+                        Error.print(errorLabel,"Error: Please fill in all String fields.");
                         return;
                     }
 
@@ -91,8 +88,7 @@ public class AddAccountController {
                     double homeRem = Double.parseDouble(homeRemAmtField.getText());
                     String address = propertyAddressField.getText().trim();
                     if (homeRem > homeAmt){
-                        errorLabel.setText("Remaining amount can't be more than loan amount");
-                        System.out.println("Remaining amount can't be more than loan amount");
+                        Error.print(errorLabel,"Remaining amount can't be more than loan amount");
                         return;
                     }
                     newAccount = new HomeLoan(password, name, balance, homeAmt, homeRem, address);
@@ -104,9 +100,8 @@ public class AddAccountController {
                     TextField carRemAmtField = activeFields.get(1);
                     TextField carModelField = activeFields.get(2);
 
-                    if (carModelField == null || carModelField.getText().isBlank()) {
-                        System.out.println("Error: Please fill in all String fields.");
-                        errorLabel.setText("Error: Please fill in all String fields.");
+                    if (isTextFieldValid(carModelField)) {
+                        Error.print(errorLabel,"Error: Please fill in all String fields.");
                         return;
                     }
 
@@ -114,15 +109,14 @@ public class AddAccountController {
                     double carRem = Double.parseDouble(carRemAmtField.getText());
                     String model = carModelField.getText().trim();
                     if (carRem > carAmt){
-                        errorLabel.setText("Remaining amount can't be more than loan amount");
-                        System.out.println("Remaining amount can't be more than loan amount");
+                        Error.print(errorLabel,"Remaining amount can't be more than loan amount");
                         return;
                     }
                     newAccount = new CarLoan( password, name, balance, carAmt, carRem, model);
                     break;
             }
 
-            // 4. SAVE AND CLOSE
+            // 4. SAVE, RELOAD AND CLOSE
             if (newAccount != null) {
                 boolean success = AccountService.createAccount(newAccount);
                 if (success) {
@@ -135,10 +129,23 @@ public class AddAccountController {
                     System.out.println("Failed to save the account to the database.");
                 }
             }
+            if (newAccount == null){
+                System.out.println("Failed to save the account to the database.");
+                return;
+            }
+            boolean success = AccountService.createAccount(newAccount);
 
+            if (!success){
+                System.out.println("Failed to save the account to the database.");
+                return;
+            }
+            if (DashboardController.instance != null) {
+                DashboardController.instance.loadAccountData();
+            }
+            System.out.println("Created Account With Name: " + name);
+            handleCancel(actionEvent);
         } catch (NumberFormatException e) {
-            System.err.println("Input Error: Please check numerical inputs.");
-            errorLabel.setText("Input Error: Please check numerical inputs.");
+            Error.print(errorLabel,"Input Error: Please check numerical inputs.");
         }
     }
 
