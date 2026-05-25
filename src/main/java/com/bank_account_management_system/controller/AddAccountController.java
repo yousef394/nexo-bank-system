@@ -164,30 +164,29 @@ public class AddAccountController {
         // 2. Inject fields based on Concrete Classes
         switch (selectedType) {
             case "Checking Account":
-                addField("Overdraft Limit");
+                addFields("Overdraft Limit");
                 break;
             case "Savings Account":
-                addField("Interest Rate (e.g. 0.05)");
+                addFields("Interest Rate (e.g. 0.05)");
                 break;
             case "Home Loan":
-                addField("Total Loan Amount");
-                addField("Remaining Amount");
-                addField("Property Address");
+                addFields("Total Loan Amount","Remaining Amount","Property Address");
                 break;
             case "Car Loan":
-                addField("Total Loan Amount");
-                addField("Remaining Amount");
-                addField("Car Model");
+                addFields("Total Loan Amount","Remaining Amount","Car Model");
                 break;
         }
     }
 
-    private void addField(String prompt) {
-        TextField tf = new TextField();
-        tf.setPromptText(prompt);
-        tf.setStyle("-fx-background-radius:8;");
-        Sanitize.applySanitizer(errorLabel, tf);
-        dynamicFields.getChildren().add(tf);
-        activeFields.add(tf); // Save to the ArrayList
+    private void addFields(String ...prompts) {
+        for (String prompt : prompts) {
+            TextField tf = new TextField();
+            tf.setPromptText(prompt);
+            tf.setStyle("-fx-background-radius:8;");
+            Sanitize.applySanitizer(errorLabel, tf);
+            dynamicFields.getChildren().add(tf);
+            activeFields.add(tf); // Save to the ArrayList
+
+        }
     }
 }

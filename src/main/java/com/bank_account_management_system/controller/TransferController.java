@@ -87,8 +87,7 @@ public class TransferController {
 
     @FXML
     public void handleCancel(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        Navigation.closePopup(event);
     }
     // THE AUTOMATIC PART: Called by ReportService
     public void initData(BankAccount account) {

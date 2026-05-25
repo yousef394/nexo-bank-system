@@ -30,18 +30,18 @@ public class Report {
         series.setName("Number of Transactions");
 
         // 3. Get all transactions from the physical file
-        ArrayList<Transaction> allTransactions = transactionRepo.getAll();
+        ArrayList<Transaction> Transactions = transactionRepo.getAll();
 
-        // We use two parallel lists to keep track of counts
-        ArrayList<Integer> uniqueAccountIds = new ArrayList<>();
+        // calculate transaction counts
+        ArrayList<Integer> AccountIds = new ArrayList<>();
         ArrayList<Integer> transactionCounts = new ArrayList<>();
 
-        for (Transaction t : allTransactions) {
+        for (Transaction t : Transactions) {
             int accId = t.getAccountId();
             // Check if we have seen this Account ID before
             boolean found = false;
-            for (int i = 0; i < uniqueAccountIds.size(); i++) {
-                if (uniqueAccountIds.get(i) == accId) {
+            for (int i = 0; i < AccountIds.size(); i++) {
+                if (AccountIds.get(i) == accId) {
                     // We found it! Increase its count in the parallel list
                     int currentCount = transactionCounts.get(i);
                     transactionCounts.set(i, currentCount + 1);
@@ -52,14 +52,14 @@ public class Report {
 
             // If it is a brand-new Account ID, add it and start its count at 1
             if (!found) {
-                uniqueAccountIds.add(accId);
+                AccountIds.add(accId);
                 transactionCounts.add(1);
             }
         }
 
         // Fill the series with data from our parallel lists
-        for (int i = 0; i < uniqueAccountIds.size(); i++) {
-            String accountIdStr = String.valueOf(uniqueAccountIds.get(i));
+        for (int i = 0; i < AccountIds.size(); i++) {
+            String accountIdStr = String.valueOf(AccountIds.get(i));
             int count = transactionCounts.get(i);
             series.getData().add(new XYChart.Data<>(accountIdStr, count));
         }
@@ -70,19 +70,21 @@ public class Report {
         details.append("------------------------------------------------------------\n");
 
         // Sort transactions so the latest ones appear first in the text area
-        allTransactions.sort((t1, t2) -> t2.getDate().compareTo(t1.getDate()));
+        Transactions.sort((t1, t2) -> t2.getDate().compareTo(t1.getDate()));
 
-        for (Transaction t : allTransactions) {
+        for (Transaction transaction : Transactions) {
             details.append(String.format("%-10d | %-10s | %-10.2f | %-20s\n",
-                    t.getAccountId(),
-                    t.getType(),
-                    t.getAmount(),
-                    t.getDate().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
+                    transaction.getAccountId(),
+                    transaction.getType(),
+                    transaction.getAmount(),
+                    transaction.getDate().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
         }
 
         reportBarChart.getData().add(series);
         reportArea.setText(details.toString());
     }
+
+
     public static void showPieChart(BarChart reportBarChart, PieChart reportPieChart, TextArea reportArea) {
         reportPieChart.setVisible(true);
         reportPieChart.setManaged(true);
@@ -104,9 +106,9 @@ public class Report {
 
         // 3. Update the report text area with totals
         reportArea.setText("--- Account Distribution Report ---\n" +
-                "Checking Accounts: "      + checking + "\n" +
-                "Savings Accounts: "       + savings + "\n" +
-                "Loan Accounts: "          + loans + "\n" +
+                "Checking Accounts: "      + checking +       "\n" +
+                "Savings Accounts: "       + savings  +       "\n" +
+                "Loan Accounts: "          + loans    +       "\n" +
                 "Total Accounts Managed: " + (checking + savings + loans));
     }
 

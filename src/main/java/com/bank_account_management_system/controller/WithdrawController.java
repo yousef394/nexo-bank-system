@@ -67,7 +67,7 @@ public class WithdrawController {
 
     @FXML
     public void handleCancel(ActionEvent event) {
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+        Navigation.closePopup(event);
     }
 
     // THE AUTOMATIC PART: Called by ReportService
