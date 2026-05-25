@@ -20,7 +20,7 @@ public class DepositController {
     @FXML
     public void initialize() {
         // Feed data to the ComboBox as requested
-        HelperClass.applySanitizer(errorLabel, idField, amountField);
+        Sanitize.applySanitizer(errorLabel, idField, amountField);
     }
 
 
@@ -41,7 +41,7 @@ public class DepositController {
                 errorLabel.setText("can't deposit less than .01");
                 return;
             }
-            boolean success = AccountService.deposit(id,password, amount, HelperClass.getUser().getUsername());
+            boolean success = AccountService.deposit(id,password, amount, Cache.getUser().getUsername());
             if (success) {
                 DashboardController.instance.loadAccountData(); // Refresh the table
                 handleCancel(event);

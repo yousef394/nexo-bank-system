@@ -23,7 +23,7 @@ public class TransferController {
     @FXML
     public void initialize() {
         // Feed data to the ComboBox as requested
-        HelperClass.applySanitizer(errorLabel, fromAccountId, toAccountId, amountField);
+        Sanitize.applySanitizer(errorLabel, fromAccountId, toAccountId, amountField);
 
     }
     @FXML
@@ -64,7 +64,7 @@ public class TransferController {
                 return;
             }
             // Call the transfer method in AccountService
-            boolean success = AccountService.transfer(fromId, password,toId, amount, HelperClass.getUser().getUsername());
+            boolean success = AccountService.transfer(fromId, password,toId, amount, Cache.getUser().getUsername());
 
             if (success) {
                 System.out.println("Transfer Successful!");
@@ -93,4 +93,11 @@ public class TransferController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
+    // THE AUTOMATIC PART: Called by ReportService
+    public void initData(BankAccount account) {
+        if (account != null) {
+            fromAccountId.setText(String.valueOf(account.getAccountId()));
+        }
+    }
+
 }

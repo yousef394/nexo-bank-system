@@ -9,8 +9,8 @@ import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 
-import static com.bank_account_management_system.controller.HelperClass.showBarChart;
-import static com.bank_account_management_system.controller.HelperClass.showPieChart;
+import static com.bank_account_management_system.controller.Report.*;
+
 
 public class ReportsController {
     @FXML private BarChart<String, Number> reportBarChart;
@@ -46,6 +46,6 @@ public class ReportsController {
     }
 
     public void handleReturn(ActionEvent actionEvent) throws IOException {
-        HelperClass.changeScene("dashboard.fxml", actionEvent);
+        Navigation.changeScene("dashboard.fxml", actionEvent);
     }
 }

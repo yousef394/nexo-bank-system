@@ -30,7 +30,7 @@ public class AddAccountController {
     @FXML
     public void initialize() {
         accountTypeBox.getItems().addAll("Checking Account", "Savings Account", "Home Loan", "Car Loan");
-        HelperClass.applySanitizer(errorLabel, nameField, passwordField, balanceField);
+        Sanitize.applySanitizer(errorLabel, nameField, passwordField, balanceField);
     }
 
     @FXML
@@ -143,7 +143,7 @@ public class AddAccountController {
     }
 
     public void handleCancel(ActionEvent actionEvent) {
-        HelperClass.closePopup(actionEvent);
+        Navigation.closePopup(actionEvent);
     }
 
     public void handleTypeChange() {
@@ -179,7 +179,7 @@ public class AddAccountController {
         TextField tf = new TextField();
         tf.setPromptText(prompt);
         tf.setStyle("-fx-background-radius:8;");
-        HelperClass.applySanitizer(errorLabel, tf);
+        Sanitize.applySanitizer(errorLabel, tf);
         dynamicFields.getChildren().add(tf);
         activeFields.add(tf); // Save to the ArrayList
     }

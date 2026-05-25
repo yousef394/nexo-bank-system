@@ -20,7 +20,7 @@ public class WithdrawController {
     @FXML
     public void initialize() {
         // Feed data to the ComboBox as requested
-        HelperClass.applySanitizer(errorLabel, idField, amountField);
+        Sanitize.applySanitizer(errorLabel, idField, amountField);
 
     }
 
@@ -50,7 +50,7 @@ public class WithdrawController {
                 return;
             }
             // Calls your Checking-specific logic
-            if (AccountService.withdraw(id, password,amount, HelperClass.getUser().getUsername())) {
+            if (AccountService.withdraw(id, password,amount, Cache.getUser().getUsername())) {
                 DashboardController.instance.loadAccountData();
                 handleCancel(event);
             }

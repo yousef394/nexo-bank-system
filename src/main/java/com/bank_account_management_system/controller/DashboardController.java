@@ -28,7 +28,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
         instance = this;
-        welcomeLabel.setText("Hello, " + HelperClass.getUser().getName());
+        welcomeLabel.setText("Hello, " + Cache.getUser().getName());
         // 1. Link columns to BankAccount properties
         // These strings MUST match the getter names (e.g., "accountId" matches "getAccountId()")
         idColumn.setCellValueFactory(new PropertyValueFactory<>("accountId"));
@@ -46,12 +46,12 @@ public class DashboardController {
     }
     public void handleReports(ActionEvent event) throws IOException {
         // Use the existing utility method in ReportService to swap views
-        HelperClass.changeScene("Reports.fxml", event);
+        Navigation.changeScene("Reports.fxml", event);
     }
 
 
     public void handleLogout(ActionEvent event) throws IOException {
-        HelperClass.changeScene("login.fxml", event);
+        Navigation.changeScene("login.fxml", event);
     }
 
     public void handleDeposit() throws IOException {
@@ -59,20 +59,21 @@ public class DashboardController {
         BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
 
         // Pass it to the service
-        HelperClass.openActionPopup("deposit.fxml", "Make A New Deposit",selected);
+        Navigation.openActionPopup("deposit.fxml", "Make A New Deposit",selected);
     }
 
     public void handleWithdraw() throws IOException {
         BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
-        HelperClass.openActionPopup("withdraw.fxml", "Make A New Withdraw",selected);
+        Navigation.openActionPopup("withdraw.fxml", "Make A New Withdraw",selected);
     }
 
     public void handleTransfer() throws  IOException {
-        HelperClass.openPopup("transfer.fxml","Make A New Transfer");
+        BankAccount selected = accountsTable.getSelectionModel().getSelectedItem();
+        Navigation.openActionPopup("transfer.fxml","Make A New Transfer", selected);
     }
 
     public void handleAddAccount()throws  IOException  {
-        HelperClass.openPopup("Add_Account_Screen.fxml", "Create A New Account");
+        Navigation.openPopup("Add_Account_Screen.fxml", "Create A New Account");
     }
 
     public void handleDeleteAccount() {

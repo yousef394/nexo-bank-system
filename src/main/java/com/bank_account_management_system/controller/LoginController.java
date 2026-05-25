@@ -32,8 +32,8 @@ public class LoginController {
         User userAccount = UserService.findByUserNameAndPassword(name, pass);
 
         if (userAccount != null) {
-            HelperClass.setUser(userAccount);
-            HelperClass.changeScene("dashboard.fxml", event);
+            Cache.setUser(userAccount);
+            Navigation.changeScene("dashboard.fxml", event);
 
             // Move to the Dashboard/Main Screen
             // You can store 'userAccount' in a static variable to know who is logged in
