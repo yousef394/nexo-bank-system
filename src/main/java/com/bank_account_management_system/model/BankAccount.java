@@ -31,7 +31,6 @@ public abstract class BankAccount implements Printable, Auditable {
 
         this.password = password;
         this.holderName = holderName;
-//        this.balance = Math.max(balance,0);
         this.balance = balance;
         this.dateCreated = LocalDateTime.now();
     }
@@ -41,8 +40,7 @@ public abstract class BankAccount implements Printable, Auditable {
                        double balance, LocalDateTime dateCreated) {
         this.accountId = accountId;
         this.password = password;
-        this.holderName = holderName;
-//        this.balance = Math.max(balance,0);
+        setHolderName( holderName);
         this.balance = balance;
         this.dateCreated = dateCreated;
     }
@@ -72,6 +70,9 @@ public abstract class BankAccount implements Printable, Auditable {
     // ================= Setters =================
 
     public void setHolderName(String holderName) {
+        if(holderName == null || holderName.isBlank()){
+            throw new IllegalArgumentException("the holder name can't be empty");
+        }
         this.holderName = holderName;
     }
 
@@ -123,8 +124,8 @@ public abstract class BankAccount implements Printable, Auditable {
     @Override
     public List<String> getAuditLog()  {
 
-       ArrayList <String> AuditLog =  new ArrayList<>();
-       TransactionRepository transactionRepo = new TransactionRepository();
+        ArrayList <String> AuditLog =  new ArrayList<>();
+        TransactionRepository transactionRepo = new TransactionRepository();
 
         for(Transaction T : (transactionRepo.getTransactionsByAccountId(this.accountId)) )
             AuditLog.add(T.printDetails());
